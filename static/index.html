@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8" name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src = "js/jquery-3.7.1.min.js"></script>      
+        <title>Homepage</title>
+        
+    </head>
+    <body>
+        <div class = "container justify-content-center">
+            <h1 class = "text-center">Cinema Home Page</h1>
+        </div>
+
+
+    </body>
+    <footer class = "bg-dark text-white text-center py-3 fixed-bottom">21104095d YAN Zhengyang <br> 22104095d ZHOU Yutong <br>EIE4432 project <br><span id = "time"></span></footer>
+    <script>
+        
+        const date = new Date(Date.now())
+        var hour = date.getHours()>12?date.getHours()%13 + 1:date.getHours();
+        hour = hour.toString().padStart(2,'0');
+        const dayPeriod = date.getHours()>12?"PM":"AM";
+        const dateString = date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + 
+        ", " + hour + ":" + date.getMinutes().toString().padStart(2,'0') + ":" + date.getSeconds().toString().padStart(2,'0')
+        + " " + dayPeriod;
+        document.getElementById("time").textContent = dateString
+    </script>
+</html>
