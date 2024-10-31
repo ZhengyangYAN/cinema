@@ -15,5 +15,5 @@ app.use(express.urlencoded({
     extended:false
 }));
 app.use('/',express.static(path)) // Use static files in /static
-
+app.use('/images',express.static("images"))
 app.listen(8080)
