@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8" name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src = "js/jquery-3.7.1.min.js"></script>      
+        <title>Seat Selection</title>
+        <style>
+            .background-container{
+                height:80vh;
+                width:99vw;
+                background:url("/images/login-banner.jpg");
+                background-size:cover;
+                background-position:center;
+            }
+            .hr-shadow {
+                border: 0;
+                padding-top: 10px;
+                color: rgb(235, 235, 235);
+                border-top: px solid rgba(0,0,0,.1);
+                box-shadow: inset 0 10px 10px -10px;
+            }
+            .brand{
+                border-radius:10px
+            }
+            .active a{
+                color: yellow !important;
+            }
+            .form-container{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background-color: rgb(0,0,0,0.75);
+                margin-top:5vh;
+                width:500px;
+            }
+            .poster{
+                width:100%;
+                margin-bottom: 10vh;
+            }
+        </style>
+    </head>
+    <body class = "bg-black min-vh-100">
+        <nav class = "navbar navbar-expand-lg navbar-light bg-black opacity-75 sticky-top py-4 px-4">
+            
+            <a class="navbar-brand text-white fs-3" href="/dashboard.html">
+                <img src = "/images/brand.png" class = "brand" alt = "brand" wdith="50" height="50">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link text-white" href="/dashboard.html">Home</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white" href="/all-movies.html">All Movies</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white">News</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white">Store</a>
+                  </li>
+                  
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class = "nav-item">
+                        <a class="nav-link text-white ">English</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white " href="/login.html">Login/Register</a>
+                    </li>
+                </ul>
+              </div>
+              
+        </nav>
+
+            <div class = "container">
+                        <div class="container text-white mb-5">
+                            <div class="main">
+                                <h2>Welcome to your Personal Center</h2>
+                                <div class="movie-tickets">
+                                    <h3>My Movie Tickets</h3>
+                                    <ul>
+                                        <li>
+                                            <strong>Movie:</strong> Avengers: Endgame<br>
+                                            <strong>Date:</strong> November 10, 2024<br>
+                                            <strong>Seat No.:</strong> A12
+                                        </li>
+                                        <li>
+                                            <strong>Movie:</strong> Black Panther<br>
+                                            <strong>Date:</strong> November 15, 2024<br>
+                                            <strong>Seat No.:</strong> B7
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="favorite-movies">
+                                    <h3>My Favorite Movies</h3>
+                                    <ul>
+                                        <li>Avengers: Infinity War</li>
+                                        <li>The Shawshank Redemption</li>
+                                    </ul>
+                                </div>
+                                <button class="logout-btn">Logout</button>
+                            </div>
+    
+                        </div>
+            </div>
+
+        
+
+    </body>
+    <footer class = "bg-dark text-white text-center py-3" >
+        <div class = "container">
+            <hr/>
+            <div class = "row">
+                <div class = "col-md-6 col-6">
+                    <a class="navbar-brand text-white fs-3" href="/dashboard.html">
+                        <img src = "/images/brand.png" class = "brand" alt = "brand" wdith="50" height="50">
+                    </a>
+                    <p class = "mt-3">© 2024 Company, Inc</p>
+                </div>
+                <div class = "col-md-6 col-6">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/all-movies.html">All Movies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white">News</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white">Store</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white">FAQs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white">Contributors: YAN Zhengyang 21104095d, ZHOU Yutong 22098552d</a>
+                            
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white">EIE4432: <span id = "time"></span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        
+        const date = new Date(Date.now())
+        var hour = date.getHours()>12?date.getHours()%13 + 1:date.getHours();
+        hour = hour.toString().padStart(2,'0');
+        const dayPeriod = date.getHours()>12?"PM":"AM";
+        const dateString = date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + 
+        ", " + hour + ":" + date.getMinutes().toString().padStart(2,'0') + ":" + date.getSeconds().toString().padStart(2,'0')
+        + " " + dayPeriod;
+        document.getElementById("time").textContent = dateString
+    </script>
+</html>
