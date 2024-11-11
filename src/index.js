@@ -1,6 +1,7 @@
 import express from "express"
 import session from "express-session"
-import client from "./db.js"
+
+import routerLogin from "./login.js"
 const app = express()
 const path = "static"
 app.use(
@@ -15,11 +16,8 @@ app.use(express.json())
 app.use(express.urlencoded({
     extended:false
 }));
-app.use('/',express.static(path),async function(req,res){
-    const result = await client.db("Cinema").collection("users").findOne({
-        "username":"21104095d"
-    })
-    console.log(result)
-}) // Use static files in /static
 app.use('/images',express.static("images"))
+app.use('/',express.static(path)) // Use static files in /static
+app.use('/auth',routerLogin)
+
 app.listen(8080)
