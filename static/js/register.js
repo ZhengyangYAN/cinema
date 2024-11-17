@@ -34,28 +34,19 @@ document.addEventListener('DOMContentLoaded',async function () {
         url:"/auth/register",
         method:"POST",
         dataTypeL:"json"
-      }).done()
-    //   fetch('/auth/register', {
-    //     method: 'POST',
-    //     body: formData,
-    //   })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       alert('1');
-    //       if (data.status === 'success') {
-    //         alert(`Welcome, ${data.user.username}!\nYou can login with your account now!`);
-    //         window.location.href = '/login.html';
-    //       } else if (data.status === 'failed') {
-    //         alert(data.message);
-    //       } else {
-    //         alert('error');
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.error('Error:', error);
-    //       alert(error);
-    //     });
-    });
+      }).done(function(res){
+        if (data.status === 'success') {
+          alert(`Welcome, ${data.user.username}!\nYou can login with your account now!`);
+          window.location.href = '/login.html';
+        } else if (data.status === 'failed') {
+          alert(data.message);
+        } else {
+          alert('error');
+        }
+    }).fail(function(err){
+        alert(err.responseJSON.message)
+    })
+  });
     document.getElementById('profile-container').addEventListener('click', function() {
       document.getElementById('imageUpload').click();
   });
