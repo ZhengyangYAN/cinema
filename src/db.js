@@ -34,7 +34,7 @@ async function connect() {
     process.exit(1)
   } 
 } 
-  
+
 connect().catch(console.dir); 
   
 export default client;

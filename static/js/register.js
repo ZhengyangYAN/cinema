@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const email = document.getElementById('email').value;
       const gender = document.getElementById('gender').value;
       const birthday = document.getElementById('birthday').value;
-      const fileInput = document.getElementById('imageInput');
-      const file = fileInput.files[0];
+      //const fileInput = document.getElementById('imageInput');
+      //const file = fileInput.files[0];
   
       if (!username || !password) {
         alert('Username and password cannot be empty');
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   
       const formData = new FormData();
-      formData.append('profileImage', file);
+      //formData.append('profileImage', file);
       formData.append('username', username);
       formData.append('password', password);
       formData.append('nickname', nickname);
@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
       formData.append('gender', gender);
       formData.append('birthday', birthday);
       formData.append('role', "user"); // all account that can be registered are users.
-      
   
       fetch('/auth/register', {
         method: 'POST',
@@ -36,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
       })
         .then((response) => response.json())
         .then((data) => {
+          alert('1');
           if (data.status === 'success') {
             alert(`Welcome, ${data.user.username}!\nYou can login with your account now!`);
             window.location.href = '/login.html';
@@ -69,3 +69,43 @@ document.addEventListener('DOMContentLoaded', function () {
       reader.readAsDataURL(file);
   });
   });
+
+  /*
+  jQuery(function() {
+    $("#Register").on("click",function(){
+        var password = $("#username").val().trim()
+        var username = $("#password").val().trim()
+        var repeatPassword = $("#repeatPassword").val().trim()
+        var nickname = $("#nickname").val().trim()
+        var email = $("#email").val().trim()
+        var gender = $("#gender").val().trim()
+        var birthday = $("#birthday").val().trim()
+        encryptedPassword = sha256(password)
+        if(!password || !username){
+            alert("Username and Password cannot be blank.")
+            return
+        }
+        else if (password != repeatPassword) {
+          alert('Password mismatch!');
+          return
+        }
+        $.ajax({
+            url: "/auth/register",
+            method: "POST",
+            dataType:"JSON",
+            data:{
+                username,
+                encryptedPassword,
+                nickname,
+                email,
+                gender,
+                birthday
+
+            }
+        }).done(function(res){
+            console.log(res)
+        }).fail(function(err){
+            alert(err.responseJSON.message)
+        })
+    })
+});*/
