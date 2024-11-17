@@ -39,6 +39,30 @@
                 width:100%;
                 margin-bottom: 10vh;
             }
+            
+            #imageUpload{
+                display: none;
+            }
+            
+            #profileImage{
+                cursor: pointer;
+            }
+            
+            #profile-container {
+                width: 150px;
+                height: 150px;
+                overflow: hidden;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+                border-radius: 50%;
+            }
+
+            #profile-container img {
+                width: 150px;
+                height: 150px;
+            }
         </style>
     </head>
     <body class = "bg-black min-vh-100">
@@ -81,6 +105,10 @@
             <div class = "container">
                         <div class="container text-white mb-5">
                             <div class="main">
+                                <div id="profile-container">
+                                    <image id="profileImage" src="#"/>
+                                 </div>
+                                <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" required="" capture>
                                 <h2>Welcome to your Personal Center</h2>
                                 <div class="movie-tickets">
                                     <h3>My Movie Tickets</h3>

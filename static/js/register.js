@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const email = document.getElementById('email').value;
       const gender = document.getElementById('gender').value;
       const birthday = document.getElementById('birthday').value;
+      const fileInput = document.getElementById('imageInput');const file = fileInput.files[0];
   
       if (!username || !password) {
         alert('Username and password cannot be empty');
@@ -18,12 +19,14 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   
       const formData = new FormData();
+      formData.append('profileImage', file);
       formData.append('username', username);
       formData.append('password', password);
       formData.append('nickname', nickname);
       formData.append('email', email);
       formData.append('gender', gender);
       formData.append('birthday', birthday);
+      formData.append('role', "user"); // all account that can be registered are users.
       
   
       fetch('/auth/register', {
