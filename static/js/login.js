@@ -21,6 +21,9 @@ jQuery(function() {
             alert(err.responseJSON.message)
         })
     })
+    $("#Register").on("click", function(){
+        window.location.href = './register.html';
+    })
 })
 function saveUserId() {
     var userId = document.getElementById('userId').value;
@@ -37,7 +40,6 @@ function saveUserId() {
     // Perform login logic here
     // You can redirect the user to the dashboard or another page upon successful login
 }
-
 // Check if there is a saved user ID and populate the input field
 document.addEventListener('DOMContentLoaded', function() {
     var savedUserId = localStorage.getItem('userId');
