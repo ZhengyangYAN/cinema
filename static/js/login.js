@@ -1,7 +1,7 @@
 jQuery(function() {
     $("#login").on("click",function(){
-        var password = $("#username").val().trim()
-        var username = $("#password").val().trim()
+        var password = $("#password").val().trim()
+        var username = $("#username").val().trim()
         encryptedPassword = sha256(password)
         if(!password || !username){
             alert("Username and Password cannot be blank.")
