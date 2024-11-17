@@ -8,15 +8,35 @@ const form = multer();
 
 router.post("/login",async function(req,res){
     form.none
-    const result = await client.db("Cinema").collection("users").findOne({
-        "username":req.body.username,
-        "password":req.body.encryptedPassword
-    })
+    var result = new Object()
+    req.session.logged = false
+    req.session.save()
+    try{
+      result = await client.db("Cinema").collection("users").findOne({
+              "username":req.body.username,
+              "password":req.body.encryptedPassword
+          })
+    }
+    catch(err){
+      res.status(401).json({
+        "status":"fail",
+        "message":"Error, try again later"
+      })
+      return
+    }
     if(result){
-        res.json({
-            "status":"success",
-            "username":result.username
-        })
+      const userStatus = {
+        "status":"success",
+        "user":{
+          "username":result.username,
+          "role":result.role
+        }
+      }
+      req.session.logged = true
+      req.session.userStatus = userStatus
+      req.session.loginTime = Date.now()
+      req.session.save()
+      res.json(userStatus)
     }
     else{
         res.status(401).json({
@@ -79,6 +99,17 @@ router.post("/register",async function(req,res){
     res.status(401).json({
       "status":"fail",
       "message":"Error, try again later"
+    })
+  }
+})
+router.get("/me",async function(req,res){
+  if(req.session.logged){
+    res.json(req.session.userStatus)
+  }
+  else{
+    res.status(401).json({
+      status:"fail",
+      message:"User is no logged in."
     })
   }
 })
