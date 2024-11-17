@@ -17,6 +17,7 @@ app.use(express.urlencoded({
     extended:false
 }));
 app.use('/images',express.static("images"))
+app.use('/m',express.static("management"))
 app.use('/',express.static(path)) // Use static files in /static
 app.use('/auth',routerLogin)
 
