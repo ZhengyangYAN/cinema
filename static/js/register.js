@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const email = document.getElementById('email').value;
       const gender = document.getElementById('gender').value;
       const birthday = document.getElementById('birthday').value;
-      const fileInput = document.getElementById('imageInput');const file = fileInput.files[0];
+      const fileInput = document.getElementById('imageInput');
+      const file = fileInput.files[0];
   
       if (!username || !password) {
         alert('Username and password cannot be empty');
@@ -62,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
           image.style.maxWidth = '200px';
           document.getElementById('profile-container').innerHTML = '';
           document.getElementById('profile-container').appendChild(image);
+
       };
   
       reader.readAsDataURL(file);
