@@ -34,14 +34,10 @@ document.addEventListener('DOMContentLoaded',async function () {
         url:"/auth/register",
         method:"POST",
         dataTypeL:"json"
-      }).done(function(res){
+      }).done(function(data){
         if (data.status === 'success') {
           alert(`Welcome, ${data.user.username}!\nYou can login with your account now!`);
           window.location.href = '/login.html';
-        } else if (data.status === 'failed') {
-          alert(data.message);
-        } else {
-          alert('error');
         }
     }).fail(function(err){
         alert(err.responseJSON.message)

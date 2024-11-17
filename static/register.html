@@ -104,10 +104,10 @@
                     <h2 class = "text-white w-50 fw-bold mt-3">Register</h2>
                     <div class="form-group w-50 text-white mb-3">
                         <div id="profile-container">
-                            <image id="profileImage"/>
+                            <image id="profileImage" alt = "avatar"/>
                          </div>
                         <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" required="" capture>
-                        <label for="username" class="form-label">*Username:</label>
+                        <label for="username" class="form-label" >*Username:</label>
                         <input type="text" class="form-control" id="username" name="username" />
                         <label for="password" class="form-label">*Password:</label>
                         <input type="text" class="form-control" id="password" name="password" />  
@@ -116,7 +116,7 @@
                         <label for="nickname" class="form-label">Nickname:</label>
                         <input type="text" class="form-control" id="nickname" name="nickname" />
                         <label for="email" class="form-label">Email:</label>
-                        <input type="text" class="form-control" id="email" name="email" />
+                        <input type="text" class="form-control" id="email" required name="email" />
                         <label for="gender">Gender:</label>
                         <select id="gender" name="gender" class="form-control mb-3">
                           <option disabled selected>-- Please Select --</option>
