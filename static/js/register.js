@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded',async function () {
     document.getElementById('Register').addEventListener('click', function (event) {
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
@@ -18,37 +18,43 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('Password mismatch!');
         return;
       }
-  
-      const formData = new FormData();
+      
+      const formData = new Object();
       //formData.append('profileImage', file);
-      formData.append('username', username);
-      formData.append('password', password);
-      formData.append('nickname', nickname);
-      formData.append('email', email);
-      formData.append('gender', gender);
-      formData.append('birthday', birthday);
-      formData.append('role', "user"); // all account that can be registered are users.
-  
-      fetch('/auth/register', {
-        method: 'POST',
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          alert('1');
-          if (data.status === 'success') {
-            alert(`Welcome, ${data.user.username}!\nYou can login with your account now!`);
-            window.location.href = '/login.html';
-          } else if (data.status === 'failed') {
-            alert(data.message);
-          } else {
-            alert('error');
-          }
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-          alert(error);
-        });
+      const encryptedPassword = sha256(password)
+      formData.username = username
+      formData.encryptedPassword = encryptedPassword
+      formData.email = email
+      formData.gender = gender
+      formData.birthday = birthday
+      formData.role = "user"
+
+      $.ajax({
+        data:formData,
+        url:"/auth/register",
+        method:"POST",
+        dataTypeL:"json"
+      }).done()
+    //   fetch('/auth/register', {
+    //     method: 'POST',
+    //     body: formData,
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       alert('1');
+    //       if (data.status === 'success') {
+    //         alert(`Welcome, ${data.user.username}!\nYou can login with your account now!`);
+    //         window.location.href = '/login.html';
+    //       } else if (data.status === 'failed') {
+    //         alert(data.message);
+    //       } else {
+    //         alert('error');
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.error('Error:', error);
+    //       alert(error);
+    //     });
     });
     document.getElementById('profile-container').addEventListener('click', function() {
       document.getElementById('imageUpload').click();
