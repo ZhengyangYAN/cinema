@@ -2,6 +2,8 @@ jQuery(function() {
     var img = null
     var slots = new Array()
     var slotsNum = 0
+    var formData = new FormData();
+
     $("#profileImage").on("click",function(){$("#imageUpload").trigger("click")})
     $("#imageUpload").on("change",function(){
         var filePath = new FileReader()
@@ -10,8 +12,7 @@ jQuery(function() {
         filePath.onload = function(){
             $("#profileImage").attr("src",this.result)
         }
-        
-        console.log(img)
+        formData.append('poster', img);
     })
     $("#add").on("click",function(){
         $("#slot-container").append(`
@@ -46,26 +47,40 @@ jQuery(function() {
             })
         }
         
+        formData.append("slots",JSON.stringify(slots))
+        formData.append("description",$("#description").val())
+        formData.append("grade",$("#grade").val())
+        formData.append("title",$("#movieTitle").val())
+        formData.append("duration",$("#duration").val())
+        formData.append("release",$("#release").val())
         $.ajax({
             url:"/backend/create",
             method: "POST",
             dataType:"json",
-            data:{
-                "slots" : JSON.stringify(slots),
-                "description":$("#description").val(),
-                "title": $("#movieTitle").val(),
-                "grade": $("#grade").val(),
-                "duration": $("#duration").val(),
-                "release": $("#release").val()
+            contentType: false,
+            processData: false,
+            // data:{
+            //     "slots" : JSON.stringify(slots),
+            //     "description":$("#description").val(),
+            //     "title": $("#movieTitle").val(),
+            //     "grade": $("#grade").val(),
+            //     "duration": $("#duration").val(),
+            //     "release": $("#release").val(),
+            //     "file":formData
 
-            }
+            // }
+            data:formData
 
         }).done(function(res){
             slots = []
+            formData = new FormData()
+            formData.append('poster', img);
             alert("Success Creation")
         })
         .fail(function(err){
             slots = []
+            formData = new FormData()
+            formData.append('poster', img);
             console.log(err)
         })
     })
