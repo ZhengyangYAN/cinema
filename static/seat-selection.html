@@ -39,7 +39,27 @@
                 width:100%;
                 margin-bottom: 10vh;
             }
+
+            .seat {
+                fill: green;
+                stroke: black;
+                stroke-width: 2px;
+                cursor: pointer;
+            }
+            .booked{
+                fill: red;
+                stroke: black;
+                stroke-width: 2px;
+                cursor: not-allowed;
+            }
+            .selected{
+                fill: grey;
+                stroke: black;
+                stroke-width: 2px;
+                cursor: not-allowed;
+            }
         </style>
+        <script defer src="/management/js/seat-management.js"></script>
     </head>
     <body class = "bg-black min-vh-100">
         <nav class = "navbar navbar-expand-lg navbar-light bg-black opacity-75 sticky-top py-4 px-4">
@@ -78,6 +98,7 @@
               
         </nav>
 
+        
             <div class = "container">
                 <div class = "row">
                     <div class = "col-md-4 col-12">
@@ -96,65 +117,62 @@
                                 <text x="295" y="20" fill="white">5</text>
                                 <text x="355" y="20" fill="white">6</text>
                                 <text x="415" y="20" fill="white">7</text>
-                                <!-- Row A -->
-                                <text x="10" y="50" fill="white">A</text>
-                                <rect x="50" y="30" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="110" y="30" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="170" y="30" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="230" y="30" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="290" y="30" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="350" y="30" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="410" y="30" width="20" height="20" fill="green" rx="5"/>
-                                <!-- Add more seat rectangles for Row A -->
                                 
-                                <!-- Row B -->
+                                <text x="10" y="50" fill="white">A</text>
+                                <rect x="50" y="30" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="110" y="30" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="170" y="30" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="230" y="30" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="290" y="30" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="350" y="30" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="410" y="30" width="20" height="20" rx="5" class="seat"/>
+                            
                                 <text x="10" y="80" fill="white">B</text>
-                                <rect x="50" y="70" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="110" y="70" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="170" y="70" width="20" height="20" fill="red" rx="5"/>
-                                <rect x="230" y="70" width="20" height="20" fill="red" rx="5"/>
-                                <rect x="290" y="70" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="350" y="70" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="410" y="70" width="20" height="20" fill="green" rx="5"/>
-                                <!-- Add more seat rectangles for Row B -->
+                                <rect x="50" y="70" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="110" y="70" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="170" y="70" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="230" y="70" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="290" y="70" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="350" y="70" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="410" y="70" width="20" height="20" rx="5" class="seat"/>
                                 
                                 <text x="10" y="120" fill="white">C</text>
-                                <rect x="50" y="110" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="110" y="110" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="170" y="110" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="230" y="110" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="290" y="110" width="20" height="20" fill="red" rx="5"/>
-                                <rect x="350" y="110" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="410" y="110" width="20" height="20" fill="green" rx="5"/>
+                                <rect x="50" y="110" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="110" y="110" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="170" y="110" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="230" y="110" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="290" y="110" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="350" y="110" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="410" y="110" width="20" height="20" rx="5" class="seat"/>
 
                                 <text x="10" y="160" fill="white">D</text>
-                                <rect x="50" y="150" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="110" y="150" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="170" y="150" width="20" height="20" fill="red" rx="5"/>
-                                <rect x="230" y="150" width="20" height="20" fill="red" rx="5"/>
-                                <rect x="290" y="150" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="350" y="150" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="410" y="150" width="20" height="20" fill="green" rx="5"/>
+                                <rect x="50" y="150" width="20" height="20" x="5" class="seat"/>
+                                <rect x="110" y="150" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="170" y="150" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="230" y="150" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="290" y="150" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="350" y="150" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="410" y="150" width="20" height="20" rx="5" class="seat"/>
 
                                 <text x="10" y="200" fill="white">E</text>
-                                <rect x="50" y="190" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="110" y="190" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="170" y="190" width="20" height="20" fill="red" rx="5"/>
-                                <rect x="230" y="190" width="20" height="20" fill="red" rx="5"/>
-                                <rect x="290" y="190" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="350" y="190" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="410" y="190" width="20" height="20" fill="green" rx="5"/>
+                                <rect x="50" y="190" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="110" y="190" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="170" y="190" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="230" y="190" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="290" y="190" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="350" y="190" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="410" y="190" width="20" height="20" rx="5" class="seat"/>
 
                                 <text x="10" y="240" fill="white">F</text>
-                                <rect x="50" y="230" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="110" y="230" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="170" y="230" width="20" height="20" fill="red" rx="5"/>
-                                <rect x="230" y="230" width="20" height="20" fill="red" rx="5"/>
-                                <rect x="290" y="230" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="350" y="230" width="20" height="20" fill="green" rx="5"/>
-                                <rect x="410" y="230" width="20" height="20" fill="green" rx="5"/>
+                                <rect x="50" y="230" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="110" y="230" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="170" y="230" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="230" y="230" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="290" y="230" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="350" y="230" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="410" y="230" width="20" height="20" rx="5" class="seat"/>
                                 
-                                <!-- Text labels for seat status -->
+                                
                                 <rect x="5" y="335" width="20" height="20" fill="green" rx="5"/>
                                 <text x="30" y="350" fill="green">Available Seats</text>
                                 <rect x="175" y="335" width="20" height="20" fill="red" rx="5"/>
@@ -163,7 +181,7 @@
                                 <text x="370" y="350" fill="grey">Selected Seats</text>
                             </svg>
                         </div>
-                        <button type = "button" class = "btn btn-warning m-3">confirm seat</button>
+                        <button type = "button" class = "btn btn-warning m-3" id="Confirm">confirm seat</button>
                         <button type = "button" class = "btn btn-secondary m-3">Cancel</button>
                     </div>
                 </div>
@@ -224,5 +242,9 @@
         ", " + hour + ":" + date.getMinutes().toString().padStart(2,'0') + ":" + date.getSeconds().toString().padStart(2,'0')
         + " " + dayPeriod;
         document.getElementById("time").textContent = dateString
+
+        $('.seat').on('click', function(){
+            alert('123');
+        })
     </script>
 </html>
