@@ -108,12 +108,20 @@
                     <br>
                     <label for="movieTitle" class = "text-white">Movie Title:</label>
                     <input type="text" class="form-control" id="movieTitle" >
-                    <label for="datetime">Date and Time:</label> <br>
-                    <input type="datetime-local" id="datetime" name="datetime">  <br>
-                    <label for="venue" class = "text-white">Venue:</label>
-                    <input type="text" class="form-control" id="venue" >
+                    <label for="release">Release Date:</label> <br>
+                    <input type="date" id="release" name="release">  <br>
+                    <label for="duration" class = "text-white" >Duration:</label> <br>
+                    <input type="number" id = "duration" name = "duration" class="form-control" min = "1"/>
+                    <label for="grade" class = "text-white" >Grade:</label> <br>
+                    <input type="number" id = "grade" name = "grade" class="form-control" min = "0" max = "5" step = "0.1"/>
                     <label for="description" class="form-label">Description:</label>
-                    <textarea placeholder="Description" id="description" class="form-control"></textarea>
+                    <textarea placeholder="Description" id="description" class="form-control"></textarea> <br>
+                    <button type = "button" id = "add" class = "btn btn-warning mb-2">Add Slot</button> <br>
+                    
+                    <div class = "container border-warning border mb-2" id = "slot-container">
+                       
+                    </div>
+                    
                 </div>
                 <div class="my-3">
                   <button type="button" class="btn btn-warning mb-5" id="Create">Create</button>
@@ -213,11 +221,6 @@
             </div>
         </div>
     </footer>
-    <script>
-        $('.carousel').carousel({
-            interval: 2000
-        })
-    </script>
     <script>
         
         const date = new Date(Date.now())
