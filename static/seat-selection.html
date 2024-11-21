@@ -49,16 +49,27 @@
             }
             .booked{
                 fill: red;
+                opacity: 0.8;
                 stroke: black;
                 stroke-width: 2px;
                 cursor: not-allowed;
             }
             .selected{
-                fill: grey;
+                fill: snow;
                 stroke: black;
                 stroke-width: 2px;
                 cursor: not-allowed;
             }
+
+            .screen{
+                margin:5px auto 20px auto;
+                width: 300px;
+                height: 30px;
+                transform:rotateX(-28deg);
+                background-color: snow;
+                box-shadow: 0 3px 10px rgba(250, 246, 246, 0.7); /*0.7是不透明度*/
+            }
+
         </style>
         <script defer src="/static/js/seat-selection.js"></script>
     </head>
@@ -109,8 +120,9 @@
                         <h1>Possession Street</h1>
                         <p><small>release: 31 Oct 2024, Duration: 95 mins</small></p>
                         <p class = "fs-4">4.1 ★★★★☆</p>
+                        <div class="screen"></div>
                         <div class="d-flex justify-content-center align-items-center">
-                            <svg class="d-flex justify-content-center align-items-center" width="475" height="390">
+                            <svg class="d-flex justify-content-center align-items-center" width="475" height="290">
                                 <text x="55" y="20" fill="white">1</text>
                                 <text x="115" y="20" fill="white">2</text>
                                 <text x="175" y="20" fill="white">3</text>
@@ -136,22 +148,24 @@
                                 <rect x="290" y="70" width="20" height="20" rx="5" class="seat"/>
                                 <rect x="350" y="70" width="20" height="20" rx="5" class="seat"/>
                                 <rect x="410" y="70" width="20" height="20" rx="5" class="seat"/>
+
+                                <rect  x="150" y="100" width="180" height="80" rx="5" stroke-width="2" stroke="gray" stroke-dasharray="10,5"/>
                                 
                                 <text x="10" y="120" fill="white">C</text>
                                 <rect x="50" y="110" width="20" height="20" rx="5" class="seat"/>
                                 <rect x="110" y="110" width="20" height="20" rx="5" class="seat"/>
-                                <rect x="170" y="110" width="20" height="20" rx="5" class="seat"/>
-                                <rect x="230" y="110" width="20" height="20" rx="5" class="seat"/>
-                                <rect x="290" y="110" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="170" y="110" width="20" height="20" rx="5" class="seat first-class"/>
+                                <rect x="230" y="110" width="20" height="20" rx="5" class="seat first-class"/>
+                                <rect x="290" y="110" width="20" height="20" rx="5" class="seat first-class"/>
                                 <rect x="350" y="110" width="20" height="20" rx="5" class="seat"/>
                                 <rect x="410" y="110" width="20" height="20" rx="5" class="seat"/>
 
                                 <text x="10" y="160" fill="white">D</text>
-                                <rect x="50" y="150" width="20" height="20" x="5" class="seat"/>
+                                <rect x="50" y="150" width="20" height="20" rx="5" class="seat"/>
                                 <rect x="110" y="150" width="20" height="20" rx="5" class="seat"/>
-                                <rect x="170" y="150" width="20" height="20" rx="5" class="seat"/>
-                                <rect x="230" y="150" width="20" height="20" rx="5" class="seat"/>
-                                <rect x="290" y="150" width="20" height="20" rx="5" class="seat"/>
+                                <rect x="170" y="150" width="20" height="20" rx="5" class="seat first-class"/>
+                                <rect x="230" y="150" width="20" height="20" rx="5" class="seat first-class"/>
+                                <rect x="290" y="150" width="20" height="20" rx="5" class="seat first-class"/>
                                 <rect x="350" y="150" width="20" height="20" rx="5" class="seat"/>
                                 <rect x="410" y="150" width="20" height="20" rx="5" class="seat"/>
 
@@ -173,17 +187,25 @@
                                 <rect x="350" y="230" width="20" height="20" rx="5" class="seat"/>
                                 <rect x="410" y="230" width="20" height="20" rx="5" class="seat"/>
                                 
-                                
-                                <rect x="5" y="335" width="20" height="20" fill="green" rx="5"/>
-                                <text x="30" y="350" fill="green">Available Seats</text>
-                                <rect x="175" y="335" width="20" height="20" fill="red" rx="5"/>
-                                <text x="200" y="350" fill="red">Occupied Seats</text>
-                                <rect x="345" y="335" width="20" height="20" fill="grey" rx="5"/>
-                                <text x="370" y="350" fill="grey">Selected Seats</text>
                             </svg>
                         </div>
-                        <button type = "button" class = "btn btn-warning m-3" id="Confirm">confirm seat</button>
-                        <button type = "button" class = "btn btn-secondary m-3">Cancel</button>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <svg class="d-flex justify-content-center align-items-center" width="700" height="50">
+                                <rect x="5" y="5" width="20" height="20" fill="red" opacity="0.8" rx="5"/>
+                                <text x="35" y="20" fill="red" font-size="large" opacity="0.9">Occupied Seats</text>
+                                <rect x="175" y="5" width="20" height="20" fill="green" rx="5"/>
+                                <text x="205" y="20" fill="green" font-size="large">Available Seats</text>
+                                <rect x="345" y="5" width="20" height="20" fill="snow" rx="5"/>
+                                <text x="375" y="20" fill="snow" font-size="large">Selected Seats</text>
+                                <rect x="515" y="5" width="20" height="20" rx="5" stroke-width="2" stroke="gray" stroke-dasharray="5,3"/>
+                                <text x="545" y="20" fill="white" font-size="large">First-class Seats</text>
+                            </svg>
+                        </div>
+                        <div class="row fs-2 bolder">
+                            <p>Price $<span id="price">0</span></p>
+                        </div>
+                        <button type = "button" class = "btn btn-warning mb-3 btn-lg" id="Confirm">confirm seat</button>
+
                     </div>
                 </div>
             </div>
@@ -244,8 +266,5 @@
         + " " + dayPeriod;
         document.getElementById("time").textContent = dateString
 
-        $('.seat').on('click', function(){
-            alert('123');
-        })
     </script>
 </html>
