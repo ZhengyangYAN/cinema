@@ -41,7 +41,6 @@ jQuery(function() {
             slots.push({
                 "venue":$("#venue"+i).val(),
                 "start":$("#start"+i).val(),
-                "end": $("#end"+i).val()
             })
         }
         
