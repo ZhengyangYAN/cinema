@@ -35,10 +35,13 @@ jQuery(function(){
                         
                         <p>${res.description}</p>
                         
-                        <button type = "button" class = "btn btn-warning w-100 mt-auto mb-5">Showtime</button>
+                        <button type = "button" class = "btn btn-warning w-100 mt-auto mb-5" id = "showtime">Showtime</button>
                     </div>
                 </div>
             `)
+        $("#showtime").on("click",function(){
+            window.open(`seat-selection.html?id=${id}`, "_blank");
+        }).css("cursor","pointer")
     }).fail(function(err){
         alert(err.responseJSON.message)
     })
