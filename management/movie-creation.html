@@ -109,11 +109,15 @@
                     <label for="movieTitle" class = "text-white">Movie Title:</label>
                     <input type="text" class="form-control" id="movieTitle" >
                     <label for="release">Release Date:</label> <br>
-                    <input type="date" id="release" name="release">  <br>
+                    <input type="date" id="release" name="release" class="form-control"> 
+                    <label for="price">Price:</label> 
+                    <input type="number" id="price" name="price" class="form-control">
                     <label for="duration" class = "text-white" >Duration:</label> <br>
                     <input type="number" id = "duration" name = "duration" class="form-control" min = "1"/>
                     <label for="grade" class = "text-white" >Grade:</label> <br>
                     <input type="number" id = "grade" name = "grade" class="form-control" min = "0" max = "5" step = "0.1"/>
+                    <label for="genres">Genres:</label> 
+                    <input type="text" id="genres" name="genres" class="form-control"> 
                     <label for="description" class="form-label">Description:</label>
                     <textarea placeholder="Description" id="description" class="form-control"></textarea> <br>
                     <button type = "button" id = "add" class = "btn btn-warning mb-2">Add Slot</button> <br>
@@ -129,55 +133,6 @@
                 </div>
               </form>
         </div>
-        <!--
-        <div class="text-white">
-            
-            <h2>Search Events</h2>
-            <form id="searchForm">
-                <input type="text" placeholder="Search by Title, Venue, or Description">
-                <input type="datetime-local">
-                <button type="submit">Search</button>
-            </form>
-
-            
-            <h2>Events</h2>
-            <ul id="eventList">
-                <li>
-                    <img src="event1.jpg" alt="Event 1">
-                    <h3>Event Title 1</h3>
-                    <p><strong>Venue:</strong> Venue 1</p>
-                    <p><strong>Date/Time:</strong> January 1, 2025 7:00 PM</p>
-                    <p><strong>Description:</strong> Event Description 1</p>
-                    <button>Edit Event</button>
-                </li>
-                <li>
-                    <img src="event2.jpg" alt="Event 2">
-                    <h3>Event Title 2</h3>
-                    <p><strong>Venue:</strong> Venue 2</p>
-                    <p><strong>Date/Time:</strong> February 1, 2025 8:00 PM</p>
-                    <p><strong>Description:</strong> Event Description 2</p>
-                    <button>Edit Event</button>
-                </li>
-                
-            </ul>
-
-            
-            <h2>Transaction History</h2>
-            <ul id="transactionHistory">
-                <li>
-                    <h3>User 1</h3>
-                    <p><strong>Event:</strong> Event Title 1</p>
-                    <p><strong>Ticket Price:</strong> $10.00</p>
-                </li>
-                <li>
-                    <h3>User 2</h3>
-                    <p><strong>Event:</strong> Event Title 2</p>
-                    <p><strong>Ticket Price:</strong> $15.00</p>
-                </li>
-                
-            </ul>
-        </div>-->
-
     </body>
     <footer class = "bg-dark text-white text-center py-3">
         <div class = "container">

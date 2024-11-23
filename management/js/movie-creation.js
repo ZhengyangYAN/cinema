@@ -26,8 +26,6 @@ jQuery(function() {
                 </select>
                 <label for = "start${slotsNum + 1}" class = "text-white">Start:</label> <br>
                 <input type = "datetime-local" id = "start${slotsNum + 1}" name = "start${slotsNum + 1}" /> <br>
-                <label for = "end${slotsNum + 1}" class = "text-white">End:</label><br>
-                <input type = "datetime-local" id = "end${slotsNum + 1}" name = "end${slotsNum + 1}" /> <br>
                 <button type = "button" id = "delete${slotsNum + 1}" class = "btn btn-danger mt-2">Delete</button>
             </div>
         `)
@@ -53,6 +51,8 @@ jQuery(function() {
         formData.append("title",$("#movieTitle").val())
         formData.append("duration",$("#duration").val())
         formData.append("release",$("#release").val())
+        formData.append("price",$("#price").val())
+        formData.append("genres",$("#genres").val())
         $.ajax({
             url:"/backend/create",
             method: "POST",

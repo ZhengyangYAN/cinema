@@ -21,10 +21,29 @@ const form = multer({
 });
 router.post("/create",uploadFile,async function(req,res){
     form.none
-    console.log(req.body)
-    res.json({
-        "message":"success created."
-    })
+    try{
+        const slots = JSON.parse(req.body.slots)
+        client.db("Cinema").collection("movies").insertOne({
+            poster:req.body.poster,
+            slots:slots,
+            description:req.body.description,
+            grade: Number(req.body.grade),
+            title: req.body.title,
+            duration: Number(req.body.duration),
+            release: req.body.release,
+            price:Number(req.body.price),
+            genres: req.body.genres
+        })
+        res.json({
+            "message":"success created."
+        })
+    }
+    catch (err){
+        res.status(404).json({
+            "message":err
+        })
+    }
+
 })
 
 function uploadFile(req, res, next){
