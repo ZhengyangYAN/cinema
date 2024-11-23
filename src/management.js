@@ -23,7 +23,7 @@ router.post("/create",uploadFile,async function(req,res){
     form.none
     console.log(req.body)
     res.json({
-        "message":"success created"
+        "message":"success created."
     })
 })
 
