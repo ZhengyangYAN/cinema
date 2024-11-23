@@ -3,6 +3,7 @@ import session from "express-session"
 
 import routerLogin from "./login.js"
 import routerManagement from "./management.js"
+import routerMovie from "./movie.js"
 const app = express()
 const path = "static"
 app.use(
@@ -22,4 +23,5 @@ app.use('/m',express.static("management"))
 app.use('/',express.static(path)) // Use static files in /static
 app.use('/auth',routerLogin)
 app.use('/backend',routerManagement)
+app.use('/movie',routerMovie)
 app.listen(8080)
