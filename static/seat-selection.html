@@ -37,7 +37,10 @@
                 width:500px;
             }
             .poster{
-                width:100%;
+                width:70%;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
                 margin-bottom: 10vh;
             }
 
@@ -71,7 +74,7 @@
             }
 
         </style>
-        <script defer src="/static/js/seat-selection.js"></script>
+        <script defer src="./js/seat-selection.js"></script>
     </head>
     <body class = "bg-black min-vh-100">
         <nav class = "navbar navbar-expand-lg navbar-light bg-black opacity-75 sticky-top py-4 px-4">
@@ -114,14 +117,26 @@
             <div class = "container">
                 <div class = "row">
                     <div class = "col-md-4 col-12">
-                        <img src = "/images/posession-street.png" class = "poster" alt = "poster">
+                        <div class = "container content" id = "content">
+
+                        </div>
                     </div>
-                    <div class = "col-md-8 col-12 text-white text-center">
-                        <h1>Possession Street</h1>
-                        <p><small>release: 31 Oct 2024, Duration: 95 mins</small></p>
-                        <p class = "fs-4">4.1 ★★★★☆</p>
-                        <div class="screen"></div>
-                        <div class="d-flex justify-content-center align-items-center">
+                    <div class = "col-md-8 col-12 text-white">
+                
+                        <div class="mb-3 fs-4">
+                            <label for="time" class="form-label">Please select a time:</label>
+                        
+                            <input type="radio" class="btn-check" name="time" id="timeslot1" autocomplete="off">
+                            <label class="btn btn-outline-light" for="timeslot1">14:30-17:00</label>
+                        
+                            <input type="radio" class="btn-check" name="time" id="timeslot2" autocomplete="off">
+                            <label class="btn btn-outline-light" for="timeslot2">19:30-22:00</label>
+                        </div>
+                        <div class="mb-3 fs-4">
+                            <label for="time" class="form-label">Please select seat:</label>
+                        </div>
+                        <div class="screen text-center"></div>
+                        <div class="d-flex justify-content-center align-items-center text-center">
                             <svg class="d-flex justify-content-center align-items-center" width="475" height="290">
                                 <text x="55" y="20" fill="white">1</text>
                                 <text x="115" y="20" fill="white">2</text>
@@ -201,11 +216,12 @@
                                 <text x="545" y="20" fill="white" font-size="large">First-class Seats</text>
                             </svg>
                         </div>
-                        <div class="row fs-2 bolder">
+                        <div class="row fs-2 bolder text-center">
                             <p>Price $<span id="price">0</span></p>
                         </div>
-                        <button type = "button" class = "btn btn-warning mb-3 btn-lg" id="Confirm">confirm seat</button>
-
+                        <div class="text-center">
+                            <button type = "button" class = "btn btn-warning mb-3 btn-lg text-center" id="Confirm">Confirm Seat</button>
+                        </div>
                     </div>
                 </div>
             </div>
