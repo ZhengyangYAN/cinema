@@ -34,4 +34,41 @@ router.post("/movie-detail",async function(req, res){
         })
     }
 })
+async function getUnavailable(name){
+    try{
+        var data = await client.db("Cinema").collection("seats").findOne({
+            name: name
+        })
+        
+        if(data === null){
+            await client.db("Cinema").collection("seats").insertOne({
+                name: name,
+                unavailable:[]
+            })
+            data = await client.db("Cinema").collection("seats").findOne({
+                name: name
+            })
+        }
+        return (data.unavailable)
+    }
+    catch(err){
+    
+        return false
+    }
+}
+
+router.post("/seat-availability",async function(req,res){
+    const data = await getUnavailable(req.body.name)
+    
+    if(data === false){
+        res.status(401).json({
+            "message":"Error, Please try again."
+        })
+    }
+    else{
+        res.json(data)
+    }
+})
+
+
 export default router

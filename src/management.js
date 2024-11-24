@@ -152,7 +152,6 @@ router.post("/seat-unable",async function(req,res){
             "message":"Error, Please try again."
         })
     }
-
 })
 router.post("/seat-enable",async function(req,res){
     const data = await getUnavailable(req.body.name)

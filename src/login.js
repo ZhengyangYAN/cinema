@@ -109,7 +109,7 @@ router.get("/me",async function(req,res){
   else{
     res.status(401).json({
       status:"fail",
-      message:"User is no logged in."
+      message:"User is not logged in."
     })
   }
 })
