@@ -26,6 +26,7 @@ jQuery(function() {
             }
         });
         $('#price').text(price);
+        return price;
     }
 
     function getTicketNo(){
@@ -79,8 +80,6 @@ jQuery(function() {
         }
     }).done(function(res){
         console.log(res)
-        
-        if (res._id == id){
             $("#content").append(`
                 <div class = "row">
                 <div class = "text-white text-center">
@@ -95,9 +94,10 @@ jQuery(function() {
         
         for (let j in res.slots){
             var timeslot = res.slots[j]["start"].slice(11) + "-" + endTime(res.slots[j]["start"].slice(11), res.duration);
+            var venue = res.slots[j]["venue"];
             $("#select-timeslot").append(`
-                <input type="radio" class="btn-check" name="time" id="${timeslot+j}" autocomplete="off">
-                <label class="btn btn-outline-light" for="${timeslot+j}">${timeslot}</label>
+                <input type="radio" class="btn-check" name="time" id="${timeslot+j}_${venue}" autocomplete="off">
+                <label class="btn btn-outline-light" for="${timeslot+j}_${venue}">${timeslot}  (${venue})</label>
             `)
 
         }
@@ -109,6 +109,8 @@ jQuery(function() {
             calculatePrice(res.price);
         });
         $("#Confirm").on("click", function(){
+            let ticketNo = getTicketNo();
+            let price = calculatePrice(res.price);
             $('.seat').each(function() {
                 var seatIndex = $(this).index();
                 
@@ -123,7 +125,7 @@ jQuery(function() {
                         "seatIndex": $(this).index()
                     })
                 }
-            });
+            })
             updateAppearence();
             const title = res.title;
             timeslot = document.querySelector('input[name="time"]:checked').id;
@@ -135,7 +137,7 @@ jQuery(function() {
                 data:{
                     "title": title,
                     "timeslot": timeslot,
-                    "ticketNo": getTicketNo(),
+                    "ticketNo": ticketNo,
                     "seats": selectedSeats
                 }
             }).done(function(res){
@@ -143,10 +145,8 @@ jQuery(function() {
             }).fail(function(err){
                 alert(err.responseJSON.message)
             })
-            alert(data)
-            window.open(`payment.html`, "_blank");
+            window.open(`payment.html?id=${id}&timeslot=${timeslot}&ticketNo=${ticketNo}&price=${price}&seats=${selectedSeats}`, "_blank");
         })
-    }
     }).fail(function(err){
         alert(err.responseJSON.message)
     })

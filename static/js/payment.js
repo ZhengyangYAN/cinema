@@ -1,27 +1,42 @@
 jQuery(function() {
-    //alert(id)
+    console.log(window.location.search)
+    var search = window.location.search
+    const searchParams = new URLSearchParams(search);
+    const id = searchParams.get('id')
+    const timeslot = searchParams.get('timeslot').slice(0, 11)
+    const venue = searchParams.get('timeslot').slice(13).split("%20")
+    const ticketNo = searchParams.get('ticketNo')
+    const price = searchParams.get('price')
+    const seats = JSON.parse(searchParams.get('seats'))
+
+    function getSeatPrice(price, index){
+        if((index >= 27 && index <= 29) || (index >= 35 && index <= 37)) return price * 1.2 + " (first-class)";
+        else return price;
+    }
+
     $.ajax({
-        method:"GET",
+        method:"POST",
         dataType:"json",
-        url:"/payment"
-    }).done(function(res){
-        console.log(res)
-        for(let i in res){
-            if (res[i]._id == id){
-                $("#content").append(`
-                    <div class = "row">
-                    <div class = "text-white text-center">
-                        <h1 id = "title">${res[i].title}</h1>
-                        <p><small>release: ${res[i].release}, Duration: ${res[i].duration} mins</small></p>
-                    </div>
-                    <div class = "">
-                        <img src = "${res[i].poster}" class = "poster" alt = "poster">
-                    </div>
-                </div>
-            `)
-            }
+        url:"/movie/movie-detail",
+        data:{
+            id:id
         }
+    }).done(function(res){
+        $('#info').append(`
+        <h5>Movie: ${res.title}</h5>
+        <h5>Venue: ${venue}</h5>
+        <h5>Timeslot: ${timeslot}</h5>
+        <h5>Seats:</h5>
+    `)
+    seats.forEach(seat => {
+        $('#info').append(`
+        <h5><b>${seat["seatNo"]}</b><span class="price">$${getSeatPrice(res.price, seat["seatIndex"])}</span></h5>
+    `)
+    });
     }).fail(function(err){
         alert(err.responseJSON.message)
     })
+
+    $('#ticketNo').text(`${ticketNo}`)
+    $('#price').text(`${price}`)
 })
