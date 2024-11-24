@@ -20,13 +20,15 @@ router.post("/", async function(req,res){
             seats: seats
         })
         res.json({
-            "message":"success created."
+            "message":"payment settled."
         })
     }
     catch (err){
-        res.status(404).json({
+        res.status(401).json({
             "message":err
         })
     }
 
 })
+
+export default router

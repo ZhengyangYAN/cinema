@@ -108,4 +108,74 @@ function uploadFile(req, res, next){
         }
     })
 }
+async function getUnavailable(name){
+    try{
+        const data = await client.db("Cinema").collection("seats").findOne({
+            name: name
+        })
+        return (data.unavailable)
+    }
+    catch(err){
+        return false
+    }
+}
+router.post("/seat-availability",async function(req,res){
+    const data = await getUnavailable(req.body.name)
+    if(data === false){
+        res.status(401).json({
+            "message":"Error, Please try again."
+        })
+    }
+    else{
+        res.json(data)
+    }
+})
+router.post("/seat-unable",async function(req,res){
+    const data = await getUnavailable(req.body.name)
+    const selected = JSON.parse(req.body.selectedArray)
+    for(let i in selected){
+        if(!data.includes(selected[i])) data.push(selected[i])
+    }
+    try{
+        await client.db("Cinema").collection("seats").updateOne(
+            {
+                name: req.body.name
+            },
+            {
+                "$set":{unavailable:data}
+            }
+        )
+        res.json(data)
+    }
+    catch(err){
+        res.status(401).json({
+            "message":"Error, Please try again."
+        })
+    }
+
+})
+router.post("/seat-enable",async function(req,res){
+    const data = await getUnavailable(req.body.name)
+    const selected = JSON.parse(req.body.selectedArray)
+    for(let i in selected){
+        if(data.includes(selected[i])) data.splice(data.indexOf(selected[i]),1)
+    }
+    try{
+        await client.db("Cinema").collection("seats").updateOne(
+            {
+                name: req.body.name
+            },
+            {
+                "$set":{unavailable:data}
+            }
+        )
+        res.json(data)
+    }
+    catch(err){
+        res.status(401).json({
+            "message":"Error, Please try again."
+        })
+    }
+
+})
 export default router
