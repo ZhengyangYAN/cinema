@@ -16,25 +16,22 @@ jQuery(function() {
         });
     }
     
-    function calculatePrice(){
+    function calculatePrice(ticketPrice){
         //var size = document.querySelector('input[name="size"]:checked');
         //var drink = document.getElementById('drinkSelection').value;
         var price = 0;
         $('.seat').each(function() {
             if($(this).hasClass('seat') && !$(this).hasClass('booked')){
-                if($(this).hasClass('selected')) price += 50;
+                if($(this).hasClass('selected') && !$(this).hasClass('first-class')) price += ticketPrice;
+                else if ($(this).hasClass('selected') && $(this).hasClass('first-class')) price += 1.2 * ticketPrice;
             }
         });
         $('#price').text(price);
     }
 
-    $(".seat").on("click", function(){
-        if($(this).hasClass('seat') && !$(this).hasClass('booked')){
-            if($(this).hasClass('selected')) $(this).removeClass('selected');
-            else $(this).addClass('selected');
-        }
-        calculatePrice();
-    });
+    function endTime(start, duration){
+        
+    }
 
     $("#Confirm").on("click", function(){
         $('.seat').each(function() {
@@ -49,30 +46,11 @@ jQuery(function() {
             }
         });
         updateAppearence();
+
     });
 
     updateAppearence();
-    
-})
-jQuery(function() {
-    function grade2star(grade){
-        var star = ""
-        while(grade >= 1){
-            star += "★"
-            grade -= 1
-        }
-        if(grade >= 0.5) star += "✬"
-        while(star.length < 5){
-            star += "✩"
-        }
-        console.log(star)
-        return star
-    }
 
-    console.log(window.location.search);
-    var search = window.location.search;
-    const id = search.split("=")[1];
-    //alert(id)
     $.ajax({
         method:"GET",
         dataType:"json",
@@ -92,10 +70,16 @@ jQuery(function() {
                     </div>
                 </div>
             `)
+            $(".seat").on("click", function(){
+                if($(this).hasClass('seat') && !$(this).hasClass('booked')){
+                    if($(this).hasClass('selected')) $(this).removeClass('selected');
+                    else $(this).addClass('selected');
+                }
+                calculatePrice(res[i].price);
+            });
             }
         }
     }).fail(function(err){
         alert(err.responseJSON.message)
     })
 })
-    
