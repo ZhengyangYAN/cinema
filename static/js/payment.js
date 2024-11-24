@@ -1,12 +1,9 @@
 jQuery(function() {
-    console.log(window.location.search);
-    var search = window.location.search;
-    const id = search.split("=")[1];
     //alert(id)
     $.ajax({
         method:"GET",
         dataType:"json",
-        url:"/movie/all-movies"
+        url:"/payment"
     }).done(function(res){
         console.log(res)
         for(let i in res){

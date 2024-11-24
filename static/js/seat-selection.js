@@ -1,6 +1,7 @@
 jQuery(function() {
     console.log(window.location.search);
     var search = window.location.search;
+    var selectedSeats = new Array()
     const id = search.split("=")[1];
 
     localStorage.removeItem(id);
@@ -17,8 +18,6 @@ jQuery(function() {
     }
     
     function calculatePrice(ticketPrice){
-        //var size = document.querySelector('input[name="size"]:checked');
-        //var drink = document.getElementById('drinkSelection').value;
         var price = 0;
         $('.seat').each(function() {
             if($(this).hasClass('seat') && !$(this).hasClass('booked')){
@@ -27,6 +26,16 @@ jQuery(function() {
             }
         });
         $('#price').text(price);
+    }
+
+    function getTicketNo(){
+        var ticketNo = 0;
+        $('.seat').each(function() {
+            if($(this).hasClass('seat') && !$(this).hasClass('booked')){
+                if($(this).hasClass('selected')) ticketNo += 1;
+            }
+        });
+        return ticketNo;
     }
 
     function endTime(start, duration){
@@ -40,23 +49,26 @@ jQuery(function() {
         return endTime;
     }
 
-    $("#Confirm").on("click", function(){
-        $('.seat').each(function() {
-            var seatIndex = $(this).index();
-            
-            if ($(this).hasClass('selected')) {
-                $(this).addClass('booked');
-                $(this).removeClass('selected');
-                //alert($(this).index());
-                bookingInfo.push($(this).index());
-                localStorage.setItem(id, JSON.stringify(bookingInfo));
-            }
-        });
-        updateAppearence();
-
-    });
-
-    updateAppearence();
+    function getSeatNo(index){
+        if (index >= 8 && index <= 14){
+            return "A"+(index%8+1)
+        }
+        else if (index >= 16 && index <= 22){
+            return "A"+(index%16+1)
+        }
+        else if (index >= 25 && index <= 31){
+            return "C"+(index%25+1)
+        }
+        else if (index >= 33 && index <= 39){
+            return "D"+(index%33+1)
+        }
+        else if (index >= 41 && index <= 47){
+            return "E"+(index%41+1)
+        }
+        else if (index >= 49 && index <= 55){
+            return "F"+(index%49+1)
+        }
+    }
 
     $.ajax({
         method:"GET",
@@ -77,14 +89,13 @@ jQuery(function() {
                     </div>
                 </div>
             `)
+            
             for (let j in res[i].slots){
-                alert(endTime(res[i].slots[j]["start"].slice(11), res[i].duration));
-
+                var timeslot = res[i].slots[j]["start"].slice(11) + "-" + endTime(res[i].slots[j]["start"].slice(11), res[i].duration);
                 $("#select-timeslot").append(`
-                    <input type="radio" class="btn-check" name="time" id="timeslot${j}" autocomplete="off">
-                    <label class="btn btn-outline-light" for="timeslot${j}">${res[i].slots[j]["start"].slice(11)}-${endTime(res[i].slots[j]["start"].slice(11), res[i].duration)}</label>
+                    <input type="radio" class="btn-check" name="time" id="${timeslot}" autocomplete="off">
+                    <label class="btn btn-outline-light" for="${timeslot}">${timeslot}</label>
                 `)
-                alert(res[i].slots[j]["start"].slice(11))
             }
             $(".seat").on("click", function(){
                 if($(this).hasClass('seat') && !$(this).hasClass('booked')){
@@ -93,9 +104,50 @@ jQuery(function() {
                 }
                 calculatePrice(res[i].price);
             });
-            }
+            $("#Confirm").on("click", function(){
+                $('.seat').each(function() {
+                    var seatIndex = $(this).index();
+                    
+                    if ($(this).hasClass('selected')) {
+                        $(this).addClass('booked');
+                        $(this).removeClass('selected');
+                        //alert($(this).index());
+                        bookingInfo.push($(this).index());
+                        localStorage.setItem(id, JSON.stringify(bookingInfo));
+                        selectedSeats.push({
+                            "seatNo": getSeatNo($(this).index()),
+                            "seatIndex": $(this).index()
+                        })
+                    }
+                });
+                updateAppearence();
+                const title = res[i].title;
+                timeslot = document.querySelector('input[name="time"]:checked').id;
+                selectedSeats = JSON.stringify(selectedSeats);
+                $.ajax({
+                    url: "/payment",
+                    method: "POST",
+                    dataType:"JSON",
+                    data:{
+                        "title": title,
+                        "timeslot": timeslot,
+                        "ticketNo": getTicketNo(),
+                        "seats": selectedSeats
+                    }
+                }).done(function(res){
+                    console.log(res)
+                }).fail(function(err){
+                    alert(err.responseJSON.message)
+                })
+                alert(data)
+                window.open(`payment.html`, "_blank");
+            })
+            
+        }
         }
     }).fail(function(err){
         alert(err.responseJSON.message)
     })
+
+    updateAppearence();
 })
