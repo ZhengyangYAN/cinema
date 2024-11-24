@@ -30,7 +30,14 @@ jQuery(function() {
     }
 
     function endTime(start, duration){
-        
+        const hours = duration / 60;
+        const mins = duration % 60;
+        const startHour = parseInt(start.slice(0,2));
+        const startMinute = parseInt(start.slice(3,5));
+        const endHour = parseInt((startMinute + mins) / 60 + startHour + hours);
+        const endMin = (startMinute + mins) % 60;
+        const endTime = endHour + ":" + endMin;
+        return endTime;
     }
 
     $("#Confirm").on("click", function(){
@@ -70,6 +77,15 @@ jQuery(function() {
                     </div>
                 </div>
             `)
+            for (let j in res[i].slots){
+                alert(endTime(res[i].slots[j]["start"].slice(11), res[i].duration));
+
+                $("#select-timeslot").append(`
+                    <input type="radio" class="btn-check" name="time" id="timeslot${j}" autocomplete="off">
+                    <label class="btn btn-outline-light" for="timeslot${j}">${res[i].slots[j]["start"].slice(11)}-${endTime(res[i].slots[j]["start"].slice(11), res[i].duration)}</label>
+                `)
+                alert(res[i].slots[j]["start"].slice(11))
+            }
             $(".seat").on("click", function(){
                 if($(this).hasClass('seat') && !$(this).hasClass('booked')){
                     if($(this).hasClass('selected')) $(this).removeClass('selected');
