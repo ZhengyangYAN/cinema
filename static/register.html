@@ -103,10 +103,6 @@
                 <form id="register" method="POST" action="/auth/register" class = "form-container">
                     <h2 class = "text-white w-50 fw-bold mt-3">Register</h2>
                     <div class="form-group w-50 text-white mb-3">
-                        <div id="profile-container">
-                            <image id="profileImage" alt = "avatar"/>
-                         </div>
-                        <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" required="" capture>
                         <label for="username" class="form-label" >*Username:</label>
                         <input type="text" class="form-control" id="username" name="username" />
                         <label for="password" class="form-label">*Password:</label>
@@ -126,11 +122,12 @@
                         <label for="birthday">Birthday:</label>
                         <input type="date" id="birthday" name="birthday">
                     </div>
-                    <div class="mb-3">
-                      <button type="button" class="btn btn-warning mb-5" id="Register">Register</button>
-                      <button type="button" class="btn btn-secondary mb-5">Back</button>
-                    </div>
-                  </form>
+                    
+                    <button type = "button" class = "btn mt-3 w-50 btn-danger" id = "Register">Create Account</button>
+                    <h5 class = "text-secondary">Has an acount? go:</h5>
+                    <a type = "button" class = "btn btn-warning w-50 mb-5" id="cancel" href = "/login.html">Login</a>
+                    
+                </form>
             </div>
         </div>
         

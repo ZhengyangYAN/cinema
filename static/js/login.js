@@ -10,13 +10,15 @@ jQuery(function() {
         $.ajax({
             url: "/auth/login",
             method: "POST",
-            dataType:"JSON",
+            dataType:"json",
             data:{
                 username,
                 encryptedPassword
             }
         }).done(function(res){
-            console.log(res)
+            saveUserId()
+            alert("Welcome " + username + "!")
+            history.back()
         }).fail(function(err){
             alert(err.responseJSON.message)
         })
@@ -24,27 +26,15 @@ jQuery(function() {
     $("#Register").on("click", function(){
         window.location.href = './register.html';
     })
+    $("#username").val(localStorage.getItem('username'))
 })
 function saveUserId() {
-    var userId = document.getElementById('userId').value;
+    var userId = $("#username").val()
     var rememberMe = document.getElementById('rememberMe').checked;
-
     if (rememberMe) {
-        localStorage.setItem('userId', userId);
-        alert('User ID saved for future logins');
+        localStorage.setItem('username', userId);
+        
     } else {
         localStorage.removeItem('userId');
-        alert('User ID removed from saved data');
     }
-
-    // Perform login logic here
-    // You can redirect the user to the dashboard or another page upon successful login
 }
-// Check if there is a saved user ID and populate the input field
-document.addEventListener('DOMContentLoaded', function() {
-    var savedUserId = localStorage.getItem('userId');
-    if (savedUserId) {
-        document.getElementById('userId').value = savedUserId;
-        document.getElementById('rememberMe').checked = true;
-    }
-});

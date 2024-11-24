@@ -17,49 +17,7 @@ jQuery(function() {
             //    $(this).addClass('booked');
         });
     }
-    
 
-    function getTicketNo(){
-        var ticketNo = 0;
-        $('.seat').each(function() {
-            if($(this).hasClass('seat') && !$(this).hasClass('booked')){
-                if($(this).hasClass('selected')) ticketNo += 1;
-            }
-        });
-        return ticketNo;
-    }
-
-    function endTime(start, duration){
-        const hours = duration / 60;
-        const mins = duration % 60;
-        const startHour = parseInt(start.slice(0,2));
-        const startMinute = parseInt(start.slice(3,5));
-        const endHour = parseInt((startMinute + mins) / 60 + startHour + hours);
-        const endMin = (startMinute + mins) % 60;
-        const endTime = endHour + ":" + endMin;
-        return endTime;
-    }
-
-    function getSeatNo(index){
-        if (index >= 8 && index <= 14){
-            return "A"+(index%8+1)
-        }
-        else if (index >= 16 && index <= 22){
-            return "A"+(index%16+1)
-        }
-        else if (index >= 25 && index <= 31){
-            return "C"+(index%25+1)
-        }
-        else if (index >= 33 && index <= 39){
-            return "D"+(index%33+1)
-        }
-        else if (index >= 41 && index <= 47){
-            return "E"+(index%41+1)
-        }
-        else if (index >= 49 && index <= 55){
-            return "F"+(index%49+1)
-        }
-    }
 
     $(".seat").on("click",function(){
         
@@ -111,7 +69,7 @@ jQuery(function() {
             alert("Error, Plase try again.")
         })
     })
-    
+
     $("#enable").on("click",function(){
         //console.log(selectedArray)
         $.ajax({
