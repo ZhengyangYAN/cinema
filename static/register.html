@@ -10,8 +10,9 @@
         <title>Resgister</title>
         <style>
             .background-container{
-                height:100vh;
+                min-height:100vh;
                 width:99vw;
+
                 background:url("/images/login-banner.jpg");
                 background-size:cover;
                 background-position:center;
@@ -103,6 +104,10 @@
                 <form id="register" method="POST" action="/auth/register" class = "form-container">
                     <h2 class = "text-white w-50 fw-bold mt-3">Register</h2>
                     <div class="form-group w-50 text-white mb-3">
+                        <div id="profile-container" >
+                            <image id="profileImage" alt = "" src = "/images/default.png" class = "poster"/>
+                         </div>
+                        <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" required="" class = "d-none" input>
                         <label for="username" class="form-label" >*Username:</label>
                         <input type="text" class="form-control" id="username" name="username" />
                         <label for="password" class="form-label">*Password:</label>

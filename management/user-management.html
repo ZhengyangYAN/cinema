@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8" name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src = "js/jquery-3.7.1.min.js"></script>
+        <script src = "js/cdnjs.cloudflare.com_ajax_libs_twitter-bootstrap_5.3.0_js_bootstrap.bundle.min.js"></script>
+        <script src = "js/cdn.datatables.net_2.1.8_js_dataTables.js"></script>
+        <script src = "js/cdn.datatables.net_2.1.8_js_dataTables.bootstrap5.js"></script>
+        <script src = "js/user-management.js"></script>
+        <title>User Management</title>
+        <style>
+            .background-container{
+                height:50vh;
+                width:99vw;
+                background:url("/images/dashboard-banner.jpg");
+                background-size:cover;
+                background-position:center;
+            }
+            .hr-shadow {
+                border: 0;
+                padding-top: 10px;
+                color: rgb(235, 235, 235);
+                border-top: px solid rgba(0,0,0,.1);
+                box-shadow: inset 0 10px 10px -10px;
+            }
+            .brand{
+                border-radius:10px
+            }
+            .active a{
+                color: yellow !important;
+            }
+            .container1 {
+                margin: 20px auto;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            .poster{
+                aspect-ratio: 0.7;
+                width:210px;
+                height:300px;
+            }
+            body{
+                min-height: 100vh;
+            }
+            .container1{
+                margin-bottom: 19vh;
+            }
+            #movie-data{
+                width:100%;
+                color:white
+            }
+            #data-table{
+                background-color: white;
+            }
+            /*.form-container{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background-color: rgb(0,0,0,0.75);
+                margin-top:5vh;
+                width:700px;
+                border-color: white;
+            }*/
+        </style>
+    </head>
+    <body class = "bg-black">
+        <nav class = "navbar navbar-expand-lg navbar-light bg-black opacity-75 sticky-top py-4 px-4">
+            
+            <a class="navbar-brand text-white fs-3" href="/dashboard.html">
+                <img src = "/images/brand.png" class = "brand" alt = "brand" wdith="50" height="50">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item ">
+                    <a class="nav-link text-white" href="/m/movie-creation.html">Movie Creation</span></a>
+                  </li>
+                  <li class="nav-item ">
+                    <a class="nav-link text-white" href="/m/movie-management.html">Movie Management</span></a>
+                  </li>
+                  <li class="nav-item ">
+                    <a class="nav-link text-white" href="/m/seat-management.html">Seat Management</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link text-white" href="/m/user-management.html">User Management</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-white" href="/m/transaction-management.html">Transaction History</a>
+                  </li>
+                  
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class = "nav-item">
+                        <a class="nav-link text-white ">English</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white " href="/login.html">Login/Register</a>
+                    </li>
+                </ul>
+              </div>
+              
+        </nav>
+        
+        <div class="container text-white fw-bold mt-3 justify-content-center d-flex">
+            <h1 class="text-center">Cinema Management</h1>
+        </div>
+        <div class = "container1 pt-2 justify-content-center d-flex d-none" id = "movie-form">
+            <form id="createEventForm" method="POST" action="/auth/movie-management" class="text-white">
+                <h2 class = "mt-3 text-center">Create New Event</h2>
+                <div class="form-group">
+                    <div id="profile-container" >
+                        <image id="profileImage" alt = "" src = "/images/default.png" class = "poster"/>
+                     </div>
+                    <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" required="" class = "d-none" input>
+                    <br>
+                    <label for="movieTitle" class = "text-white">Movie Title:</label>
+                    <input type="text" class="form-control" id="movieTitle" >
+                    <label for="release">Release Date:</label> <br>
+                    <input type="date" id="release" name="release" class="form-control"> 
+                    <label for="price">Price:</label> 
+                    <input type="number" id="price" name="price" class="form-control">
+                    <label for="duration" class = "text-white" >Duration:</label> <br>
+                    <input type="number" id = "duration" name = "duration" class="form-control" min = "1"/>
+                    <label for="grade" class = "text-white" >Grade:</label> <br>
+                    <input type="number" id = "grade" name = "grade" class="form-control" min = "0" max = "5" step = "0.1"/>
+                    <label for="genres">Genres:</label> 
+                    <input type="text" id="genres" name="genres" class="form-control"> 
+                    <label for="description" class="form-label">Description:</label>
+                    <textarea placeholder="Description" id="description" class="form-control"></textarea> <br>
+                    <button type = "button" id = "add" class = "btn btn-warning mb-2">Add Slot</button> <br>
+                    
+                    <div class = "container border-warning border mb-2" id = "slot-container">
+                       
+                    </div>
+                    
+                </div>
+                <div class="my-3">
+                  <button type="button" class="btn btn-warning mb-5" id="update">Update</button>
+                  <button type="button" class="btn btn-secondary mb-5" id = "cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class = "container1 pt-2" id = "data-table">
+            <table class="table table-striped" id = "movie-data">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Relase Date</th>
+                        <th>Price($)</th>
+                        <th>Duration(mins)</th>
+                        <th>Genres</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </body>
+    <footer class = "bg-dark text-white text-center py-3">
+        <div class = "container">
+            <hr/>
+            <div class = "row">
+                <div class = "col-md-6 col-6">
+                    <a class="navbar-brand text-white fs-3 " href="/dashboard.html">
+                        <img src = "/images/brand.png" class = "brand" alt = "brand" wdith="50" height="50">
+                    </a>
+                    <p class = "mt-3">© 2024 Company, Inc</p>
+                </div>
+                <div class = "col-md-6 col-6">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/all-movies.html">All Movies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white">News</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white">Store</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white">FAQs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white">Contributors: YAN Zhengyang 21104095d, ZHOU Yutong 22098552d</a>
+                            
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white">EIE4432: <span id = "time"></span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        const date = new Date(Date.now())
+        var hour = date.getHours()>12?date.getHours()%13 + 1:date.getHours();
+        hour = hour.toString().padStart(2,'0');
+        const dayPeriod = date.getHours()>12?"PM":"AM";
+        const dateString = date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + 
+        ", " + hour + ":" + date.getMinutes().toString().padStart(2,'0') + ":" + date.getSeconds().toString().padStart(2,'0')
+        + " " + dayPeriod;
+        document.getElementById("time").textContent = dateString
+    </script>
+</html>

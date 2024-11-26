@@ -1,4 +1,26 @@
 document.addEventListener('DOMContentLoaded',async function () {
+  var img = null
+
+  jQuery(function(){
+    $.ajax({
+        url:"/auth/me",
+        method:"GET",
+        dataType:"json"
+    }).done(function(result){
+      window.location.href = "/dashboard.html"
+    }).fail()
+})
+  const formData = new FormData();
+  $("#profileImage").on("click",function(){$("#imageUpload").trigger("click")})
+    $("#imageUpload").on("change",function(){
+        var filePath = new FileReader()
+        img = this.files[0]
+        filePath.readAsDataURL(img)
+        filePath.onload = function(){
+            $("#profileImage").attr("src",this.result)
+        }
+        formData.append('avatar', img);
+    })
     document.getElementById('Register').addEventListener('click', function (event) {
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
@@ -18,21 +40,27 @@ document.addEventListener('DOMContentLoaded',async function () {
         alert('Password mismatch!');
         return;
       }
+      if(!img){
+        alert("The avatar cannot be empty.")
+        return
+      }
       
-      const formData = new Object();
       //formData.append('profileImage', file);
       const encryptedPassword = sha256(password)
-      formData.username = username
-      formData.encryptedPassword = encryptedPassword
-      formData.email = email
-      formData.gender = gender
-      formData.birthday = birthday
-      formData.role = "user"
+      formData.append("username",username)
+      formData.append("encryptedPassword",encryptedPassword)
+      formData.append("email",email)
+      formData.append("gender",gender)
+      formData.append("birthday",birthday)
+      formData.append("nickname",nickname)
+      formData.append("role","user")
 
       $.ajax({
         data:formData,
         url:"/auth/register",
         method:"POST",
+        contentType: false,
+        processData: false,
         dataTypeL:"json"
       }).done(function(data){
         if (data.status === 'success') {
@@ -42,5 +70,6 @@ document.addEventListener('DOMContentLoaded',async function () {
       }).fail(function(err){
           alert(err.responseJSON.message)
       })
+
   });
   });
