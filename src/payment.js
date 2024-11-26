@@ -49,7 +49,6 @@ router.post("/", async function(req,res){
     }
     try{
         await client.db("Cinema").collection("transactions").insertOne({
-            username:username,
             orderNum : req.body.orderNum,
             title: req.body.title,
             seatIndex: JSON.parse(req.body.seatIndex),
@@ -64,7 +63,10 @@ router.post("/", async function(req,res){
             state :req.body.state,
             zip:req.body.zip,
             totalPrice: req.body.totalPrice,
-            status:"paied"
+            status:"paied",
+            time:Date.now(),
+            userId : req.session.userStatus.user.id,
+            username:username
         })
         res.json({
             "status":"success"
@@ -77,5 +79,17 @@ router.post("/", async function(req,res){
     }
     
 })
-
+router.post("/history", async function(req, res){
+    try{
+        const history = await client.db("Cinema").collection("transactions").find(
+            {userId:req.body.id}
+        ).toArray()
+        res.json(history)
+    }
+    catch(err){
+        res.status(401).json({
+            "message":"Error, Please try again."
+        })
+    }
+})
 export default router

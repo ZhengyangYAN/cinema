@@ -4,11 +4,22 @@
         <meta charset = "utf-8" name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        <script src = "js/jquery-3.7.1.min.js"></script>      
+        <script src = "js/jquery-3.7.1.min.js"></script>
+        <script src = "js/sha256.min.js"></script>     
         <script src= "/js/personal-center.js"></script>  
         <script src = "js/loginAuth.js"> </script>
-        <title>Seat Selection</title>
+        <title>Personal</title>
         <style>
+            .payment_container {
+              display:block;
+              align-items: center;
+              width: 100%;
+              margin: 20px auto;
+              padding: 20px;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+              color:white
+            }
             .background-container{
                 height:80vh;
                 width:99vw;
@@ -48,22 +59,46 @@
             
             #profileImage{
                 cursor: pointer;
-            }
-            
-            #profile-container {
-                width: 150px;
-                height: 150px;
+                width: 15vw;
+                height: 15vw;
                 overflow: hidden;
                 -webkit-border-radius: 50%;
                 -moz-border-radius: 50%;
                 -ms-border-radius: 50%;
                 -o-border-radius: 50%;
                 border-radius: 50%;
+                margin-top: 10%;
+                margin-bottom:10%
+            }
+            
+            .profile-container {
+                width: 10vw;
+                height: 10vw;
+                overflow: hidden;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+                border-radius: 50%;
+                margin-top: 10%;
+                margin-bottom:10%
             }
 
-            #profile-container img {
-                width: 150px;
-                height: 150px;
+            .profile-container img {
+                height: 10vw;
+                width:10vw;
+            }
+            .menu{
+                background-color: rgb(30,30,30);
+                min-height: 100vh;
+            }
+            .list{
+                width:100%;
+                height: inherit;
+                cursor: pointer;
+            }
+            .list:hover{
+                background-color: rgb(50,50,50);
             }
         </style>
     </head>
@@ -107,7 +142,33 @@
         </nav>
 
         <div class = "container">
-
+            <div class = "row">
+                <div class = "col-3 col-lg-4 menu d-flex  flex-column align-items-center">
+                    <div class = "profile-container"> <img alt = "avatar" id = "avatar"> </div>
+                    <div class = "d-flex fw-bold justify-content-center text-white">
+                        <h3 class = "fw-bold" id = "nname"></h3>
+                    </div>
+                    <div class = "d-flex justify-content-center text-white">
+                        <h4 class = "fw-bold" id = "uname"> </h4>
+                    </div>
+                    <div class = "d-flex justify-content-center text-white">
+                        <h4 class = "fw-bold" id = "rrole"> </h4>
+                    </div>
+                    <div class = "list d-flex justify-content-center text-white" id = "transaction">
+                        <h5 class = "fw-bold"> Transactions</h5>
+                    </div>
+                    <div class = "list d-flex justify-content-center text-white" id = "setting">
+                        <h5 class = "fw-bold"> Settings</h5>
+                    </div>
+                    <div class = "list d-flex justify-content-center text-white" id = "change">
+                        <h5 class = "fw-bold">Password</h5>
+                    </div>
+                    <button class = "btn btn-danger" id = "logout">Logout</button>
+                </div>
+                <div class = "col-9 col-lg-8 d-flex flex-column align-items-center" id = "info">
+                    
+                </div>
+            </div>
         </div>
     </body>
     <footer class = "bg-dark text-white text-center py-3" >

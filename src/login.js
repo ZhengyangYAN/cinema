@@ -4,6 +4,7 @@ import fs from 'fs/promises'
 import Router from 'express'
 import client from "./db.js"
 const router = Router();
+import {ObjectId} from 'mongodb'
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'images/')
@@ -46,7 +47,8 @@ router.post("/login",async function(req,res){
           "birthday":result.birthday,
           "gender":result.gender,
           "email":result.email,
-          "nickname":result.nickname
+          "nickname":result.nickname,
+          "id":result._id
         }
       }
       req.session.logged = true
@@ -71,21 +73,57 @@ function uploadFile(req, res, next){
           res.status(401).json({})
       }
       else{
-        try{
-            req.body.avatar = req.file.path
-            next()
-        }
-        catch (err){
-            console.log(req.body)
-            res.status(401).json({
-                "status":"error",
-                "message":"No image uploaded."
-            })
-        }
+          if(req.body.isImg == '0'){
+              next()
+          }
+          else{
+              try{
+                  req.body.avatar = req.file.path
+                  next()
+              }
+              catch (err){
+                console.log(req.body)
+                  if(req.body.isImg == '0'){
+                      next()
+                  }
+                  res.status(401).json({
+                      "status":"error",
+                      "message":"No image uploaded."
+                  })
+              }
+          }
       }
   })
 }
-
+router.post("/update",uploadFile,async function(req,res){
+  
+  try{
+    await client.db("Cinema").collection("users").updateOne({
+        "_id" : ObjectId.createFromHexString(req.body.id)
+      },{
+        "$set":{
+          "username":req.body.username,
+          "role": req.body?.role ?? "user",
+          "gender": req.body.gender,
+          "nickname": req.body.nickname,
+          "email": req.body.email,
+          "avatarUrl": req.body?.avatar ?? req.body.currentAvatar
+        }
+      })
+      
+      res.json({
+        status:"success"
+      })
+      req.session.destroy()
+  }
+  catch (err){
+    console.log(err)
+    res.status(401).json({
+      "status":"fail",
+      "message":"Error, try again later"
+    })
+  }
+})
 router.post("/register",uploadFile,async function(req,res){
   form.none
   
@@ -146,6 +184,7 @@ router.post("/register",uploadFile,async function(req,res){
     })
   }
 })
+
 router.get("/me",async function(req,res){
   if(req.session.logged){
     res.json(req.session.userStatus)
@@ -156,5 +195,25 @@ router.get("/me",async function(req,res){
       message:"User is not logged in."
     })
   }
+})
+router.get("/logout",async function(req,res){
+  req.session.destroy()
+  res.end()
+})
+router.post("/password",async function(req,res){
+  try{
+    await client.db("Cinema").collection("users").updateOne(
+      {username:req.body.username},
+    {"$set":{password:req.body.encryptedPassword}})
+    req.session.destroy()
+    res.end()
+  }
+  catch(err){
+    res.status(401).json({
+      status:"fail",
+      message:"Error, please try again."
+    })
+  }
+  
 })
 export default router

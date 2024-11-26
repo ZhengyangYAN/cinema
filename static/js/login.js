@@ -3,6 +3,7 @@ jQuery(function() {
         var password = $("#password").val().trim()
         var username = $("#username").val().trim()
         encryptedPassword = sha256(password)
+        console.log(encryptedPassword)
         if(!password || !username){
             alert("Username and Password cannot be blank.")
             return

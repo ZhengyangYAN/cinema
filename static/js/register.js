@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded',async function () {
       window.location.href = "/dashboard.html"
     }).fail()
 })
-  const formData = new FormData();
+  var formData = new FormData();
   $("#profileImage").on("click",function(){$("#imageUpload").trigger("click")})
     $("#imageUpload").on("change",function(){
         var filePath = new FileReader()
