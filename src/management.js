@@ -177,4 +177,16 @@ router.post("/seat-enable",async function(req,res){
     }
 
 })
+
+router.get("/all-users",async function(req,res){
+    try{
+        const data = await client.db("Cinema").collection("users").find({}).toArray()
+        res.json(data)
+    }
+    catch(err){
+        res.status(401).json({
+            "message":"Error, Please try again."
+        })
+    }
+})
 export default router

@@ -1,170 +1,131 @@
 jQuery(async function() {
-    var table = new DataTable('#movie-data');
+    var table = new DataTable('#user-data');
     $.ajax({
         method:"GET",
         dataType:"json",
         url:"/backend/all-users"
     }).done(function(res){
+        console.log(res)
         for(let i in res){
             table.row
                 .add([
                     res[i]._id,
-                    res[i].title,
-                    res[i].release,
-                    res[i].price,
-                    res[i].duration,
-                    res[i].genres,
-                    res[i].grade,
+                    res[i].username,
+                    res[i].nickname,
+                    res[i].birthday,
+                    res[i].email,
+                    res[i].gender,
+                    res[i].role
                 ]) .draw(false);
         }
-        var img = null
-        var slots = new Array()
-        var slotsNum = 0
-        var formData = new FormData();
-        var isImg = 0
-        var imgUrl = null
-        var id = null
-        $("#profileImage").on("click",function(){$("#imageUpload").trigger("click")})
-        $("#imageUpload").on("change",function(){
-            var filePath = new FileReader()
-            img = this.files[0]
-            filePath.readAsDataURL(img)
-            filePath.onload = function(){
-                $("#profileImage").attr("src",this.result)
-            }
-            formData.append('poster', img);
-            isImg = 1
-        })
-        $("#add").on("click",function(){
-            $("#slot-container").append(`
-                <div class = "my-2 p-2" id = "slot${slotsNum + 1}">
-                    <label class = "text-white">Slot ${slotsNum + 1}</label> <br>
-                    <label for="venue${slotsNum + 1}" class = "text-white">Venue:</label>
-                    <select id = "venue${slotsNum + 1}" class = "form-control" name = "venue${slotsNum + 1}">
-                        <option>Exhibition Hall 1</option>
-                        <option>Exhibition Hall 2</option>
-                        <option>Exhibition Hall 3</option>
-                    </select>
-                    <label for = "start${slotsNum + 1}" class = "text-white">Start:</label> <br>
-                    <input type = "datetime-local" id = "start${slotsNum + 1}" name = "start${slotsNum + 1}" /> <br>
-                    <button type = "button" id = "delete${slotsNum + 1}" class = "btn btn-danger mt-2">Delete</button>
-                </div>
-            `)
-            slotsNum += 1
-            $("#delete"+slotsNum).on("click", function(){
-                $("#slot"+slotsNum).remove()
-                slotsNum -= 1;
-            })
-        })
-        $('#movie-data tbody').on('click', 'tr', function() {
-            $("#data-table").addClass("d-none")
-            $.ajax({
-                data:{id : table.row(this).data()[0]},
-                method:"POST",
-                dataType:"json",
-                url:"/movie/movie-detail"
-            }).done(function(res){
-                $("#movie-form").removeClass("d-none")
-                $("#price").val(res.price)
-                $("#duration").val(res.duration)
-                $("#grade").val(res.grade)
-                $("#release").val(res.release)
-                $("#description").val(res.description)
-                $("#movieTitle").val(res.title)
-                $("#genres").val(res.genres)
-                $("#profileImage").attr("src","/"+res.poster)
-                id = res._id
-                imgUrl = res.poster
-                isImg = 0
-                slotsNum = 0
-                $("#slot-container").empty()
-                for(let i in res.slots){
-                    $("#slot-container").append(`
-                        <div class = "my-2 p-2" id = "slot${slotsNum + 1}">
-                            <label class = "text-white">Slot ${slotsNum + 1}</label> <br>
-                            <label for="venue${slotsNum + 1}" class = "text-white">Venue:</label>
-                            <select id = "venue${slotsNum + 1}" class = "form-control" name = "venue${slotsNum + 1}">
-                                <option>Exhibition Hall 1</option>
-                                <option>Exhibition Hall 2</option>
-                                <option>Exhibition Hall 3</option>
-                            </select>
-                            <label for = "start${slotsNum + 1}" class = "text-white">Start:</label> <br>
-                            <input type = "datetime-local" id = "start${slotsNum + 1}" name = "start${slotsNum + 1}" /> <br>
-                            <button type = "button" id = "delete${slotsNum + 1}" class = "btn btn-danger mt-2">Delete</button>
-                        </div>
-                    `)
-                    slotsNum += 1
-                    $("#delete"+slotsNum).on("click", function(){
-                        $("#slot"+slotsNum).remove()
-                        slotsNum -= 1;
-                    })
-                    $("#start"+slotsNum).val(res.slots[i].start)
-                    $("#venue"+slotsNum).val(res.slots[i].venue)
-                }
-
-            }).fail(function(err){
-                alert("Error, please try agian.")
-            })
-            $("#movie-form").removeClass("d-none")
-            //console.log('clicked: ' + )
-        }).css("cursor","pointer")
-        $("#update").on("click",function(){
-            for(let i = 1; i<=slotsNum; i++){
-                slots.push({
-                    "venue":$("#venue"+i).val(),
-                    "start":$("#start"+i).val(),
-                })
-            }
-            formData.append("slots",JSON.stringify(slots))
-            formData.append("description",$("#description").val())
-            formData.append("grade",$("#grade").val())
-            formData.append("title",$("#movieTitle").val())
-            formData.append("duration",$("#duration").val())
-            formData.append("release",$("#release").val())
-            formData.append("price",$("#price").val())
-            formData.append("genres",$("#genres").val())
-            formData.append("isImg",isImg)
-            formData.append("imgUrl",imgUrl)
-            formData.append("id",id)
-            $.ajax({
-                url:"/backend/manage-movie",
-                method: "POST",
-                dataType:"json",
-                contentType: false,
-                processData: false,
-                // data:{
-                //     "slots" : JSON.stringify(slots),
-                //     "description":$("#description").val(),
-                //     "title": $("#movieTitle").val(),
-                //     "grade": $("#grade").val(),
-                //     "duration": $("#duration").val(),
-                //     "release": $("#release").val(),
-                //     "file":formData
-    
-                // }
-                data:formData
-    
-            }).done(function(res){
-                alert("Success Modification")
-                formData = new FormData()
-                slots = []
-                $("#movie-form").addClass("d-none")
-                $("#data-table").removeClass("d-none")
-            })
-            .fail(function(err){
-                alert("error")
-                formData = new FormData()
-                slots = []
-                $("#movie-form").addClass("d-none")
-                $("#data-table").removeClass("d-none")
-                console.log(err)
-            })
-        })
-        $("#cancel").on("click",function(){
-            $("#movie-form").addClass("d-none")
-            $("#data-table").removeClass("d-none")
-        })
+        
     }).fail(function(err){
         alert(err.status)
     })
+    var img = null
+    var formData = new FormData();
+    var isImg = 0
+    var imgUrl = null
+       
+    $('#user-data tbody').on('click', 'tr', function() {
+
+        $.ajax({
+            url:"/auth/user",
+            method:"POST",
+            dataType:"json",
+            data:{
+                id:table.row(this).data()[0]
+            }
+        }).done(function(res){
+            console.log(res)
+            $("#data-table").addClass("d-none")
+            $("#info").empty().append(`
+            <form>
+                <h2 class = "text-white  fw-bold mt-3">Edit Profile</h2>
+                <div class="form-group text-white mb-3">
+                    <div id="profile-container" >
+                        <image id="profileImage" alt = "" />
+                    </div>
+                    <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" required="" class = "d-none" input>
+                    <label for="username" class="form-label"  >Username:</label>
+                    <input type="text" class="form-control" value = "${res.username}" id="username" name="username" /> 
+                    <label for="nickname" class="form-label">Nickname:</label>
+                    <input type="text" class="form-control" id="nickname" name="nickname" value = "${res.nickname}"/>
+                    <label for="email" class="form-label" >Email:</label>
+                    <input type="text" class="form-control" value = "${res.email}"id="email" required name="email" />
+                    
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" class="form-control" value = "" >
+                    <option disabled >-- Please Select --</option>
+                    <option value="male" >Male</option>
+                    <option value="female" >Female</option>
+                    </select>
+                    <label for="role">Role:</label>
+                    <select id="role" name="role" class="form-control mb-3" value = "" >
+                    <option disabled >-- Please Select --</option>
+                    <option value="admin" >Admin</option>
+                    <option value="user" >User</option>
+                    </select>
+                    <label for="birthday">Birthday:</label>
+                    <input type="date" id="birthday" name="birthday" value = "${res.birthday}">
+                </div>
+                
+                <button type = "button" class = "btn mt-3 btn-danger" id = "update">Update</button>
+                <button type = "button" class = "btn mt-3 btn-secondary" id = "cancel">Cancel</button>
+            </form>
+            `)
+            $("#profileImage").attr("src","/"+res.avatarUrl)
+            $("#gender").val(res.gender)
+            $("#role").val(res.role)
+            $("#profileImage").on("click",function(){$("#imageUpload").trigger("click")})
+            $("#imageUpload").on("change",function(){
+                var filePath = new FileReader()
+                img = this.files[0]
+                isImg = 1
+                filePath.readAsDataURL(img)
+                filePath.onload = function(){
+                    $("#profileImage").attr("src",this.result)
+                }
+                formData.append('avatar', img);
+            })
+            $("#cancel").on("click",function(){
+                $("#info").empty()
+                $("#data-table").removeClass("d-none")
+            })
+            $("#update").on("click",function(){
+                console.log($("#username").val())
+                formData.append("username",$("#username").val())
+                formData.append("email",$("#email").val())
+                formData.append("gender",$("#gender").val())
+                formData.append("birthday",$("#birthday").val())
+                formData.append("nickname",$("#nickname").val())
+                formData.append("role",$("#role").val())
+                formData.append("currentAvatar",res.avatarUrl)
+                formData.append("isImg",isImg)
+                formData.append("id",res._id)
+                $.ajax({
+                data:formData,
+                dataType:"json",
+                contentType: false,
+                processData: false,
+                url:"/auth/manage-user",
+                method:"POST"
+                }).done(function(res){
+                    formData = new FormData()
+                    alert("Success update.")
+                    $("#info").empty()
+                    $("#data-table").removeClass("d-none")
+                }).fail(function(){
+                    alert("Error, try again.")
+                    formData = new FormData()
+                    $("#info").empty()
+                    $("#data-table").removeClass("d-none")
+                })
+            })
+        }).fail(function(){
+            alert("Error, try again.")
+        })
+    })
+
+
 });

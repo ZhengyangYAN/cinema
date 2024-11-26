@@ -124,6 +124,33 @@ router.post("/update",uploadFile,async function(req,res){
     })
   }
 })
+router.post("/manage-user",uploadFile,async function(req,res){
+  
+  try{
+    await client.db("Cinema").collection("users").updateOne({
+        "_id" : ObjectId.createFromHexString(req.body.id)
+      },{
+        "$set":{
+          "username":req.body.username,
+          "role": req.body?.role ?? "user",
+          "gender": req.body.gender,
+          "nickname": req.body.nickname,
+          "email": req.body.email,
+          "avatarUrl": req.body?.avatar ?? req.body.currentAvatar
+        }
+      })
+      
+      res.json({
+        status:"success"
+      })
+  }
+  catch (err){
+    res.status(401).json({
+      "status":"fail",
+      "message":"Error, try again later"
+    })
+  }
+})
 router.post("/register",uploadFile,async function(req,res){
   form.none
   
@@ -215,5 +242,19 @@ router.post("/password",async function(req,res){
     })
   }
   
+})
+router.post("/user", async function(req, res){
+  try{
+    const data = await client.db("Cinema").collection("users").findOne({
+      _id : ObjectId.createFromHexString(req.body.id)
+    })
+    res.json(data)
+  }
+  catch(err){
+    res.status(401).json({
+      status:"fail",
+      message:"Error, please try again."
+    })
+  }
 })
 export default router

@@ -11,6 +11,20 @@
         <script src = "js/user-management.js"></script>
         <title>User Management</title>
         <style>
+            
+            #profileImage{
+                cursor: pointer;
+                width: 15vw;
+                height: 15vw;
+                overflow: hidden;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+                border-radius: 50%;
+                margin-top: 5%;
+                margin-bottom:5%
+            }
             .background-container{
                 height:50vh;
                 width:99vw;
@@ -48,9 +62,10 @@
             .container1{
                 margin-bottom: 19vh;
             }
-            #movie-data{
+            #user-data{
                 width:100%;
-                color:white
+                color:white;
+                cursor:pointer
             }
             #data-table{
                 background-color: white;
@@ -107,61 +122,31 @@
         </nav>
         
         <div class="container text-white fw-bold mt-3 justify-content-center d-flex">
-            <h1 class="text-center">Cinema Management</h1>
+            <h1 class="text-center">User Management</h1>
         </div>
-        <div class = "container1 pt-2 justify-content-center d-flex d-none" id = "movie-form">
-            <form id="createEventForm" method="POST" action="/auth/movie-management" class="text-white">
-                <h2 class = "mt-3 text-center">Create New Event</h2>
-                <div class="form-group">
-                    <div id="profile-container" >
-                        <image id="profileImage" alt = "" src = "/images/default.png" class = "poster"/>
-                     </div>
-                    <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" required="" class = "d-none" input>
-                    <br>
-                    <label for="movieTitle" class = "text-white">Movie Title:</label>
-                    <input type="text" class="form-control" id="movieTitle" >
-                    <label for="release">Release Date:</label> <br>
-                    <input type="date" id="release" name="release" class="form-control"> 
-                    <label for="price">Price:</label> 
-                    <input type="number" id="price" name="price" class="form-control">
-                    <label for="duration" class = "text-white" >Duration:</label> <br>
-                    <input type="number" id = "duration" name = "duration" class="form-control" min = "1"/>
-                    <label for="grade" class = "text-white" >Grade:</label> <br>
-                    <input type="number" id = "grade" name = "grade" class="form-control" min = "0" max = "5" step = "0.1"/>
-                    <label for="genres">Genres:</label> 
-                    <input type="text" id="genres" name="genres" class="form-control"> 
-                    <label for="description" class="form-label">Description:</label>
-                    <textarea placeholder="Description" id="description" class="form-control"></textarea> <br>
-                    <button type = "button" id = "add" class = "btn btn-warning mb-2">Add Slot</button> <br>
-                    
-                    <div class = "container border-warning border mb-2" id = "slot-container">
-                       
-                    </div>
-                    
-                </div>
-                <div class="my-3">
-                  <button type="button" class="btn btn-warning mb-5" id="update">Update</button>
-                  <button type="button" class="btn btn-secondary mb-5" id = "cancel">Cancel</button>
-                </div>
-            </form>
-        </div>
+
         <div class = "container1 pt-2" id = "data-table">
-            <table class="table table-striped" id = "movie-data">
+            <table class="table table-striped" id = "user-data">
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Title</th>
-                        <th>Relase Date</th>
-                        <th>Price($)</th>
-                        <th>Duration(mins)</th>
-                        <th>Genres</th>
-                        <th>Grade</th>
+                        <th>Username</th>
+                        <th>Nickname</th>
+                        <th>Birthday</th>
+                        <th>Email</th>
+                        <th>gender</th>
+                        <th>Role</th>
                     </tr>
                 </thead>
                 <tbody>
                 </tbody>
             </table>
         </div>
+        <div class = "container" id = "info">
+
+
+        </div>
+
     </body>
     <footer class = "bg-dark text-white text-center py-3">
         <div class = "container">
