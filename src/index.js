@@ -20,6 +20,9 @@ app.use(express.json())
 app.use(express.urlencoded({
     extended:false
 }));
+app.get("/",function(req,res){
+    res.redirect("/dashboard.html")
+})
 app.use('/images',express.static("images"))
 app.use('/m',express.static("management"))
 app.use('/',express.static(path)) // Use static files in /static
