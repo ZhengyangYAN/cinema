@@ -92,4 +92,16 @@ router.post("/history", async function(req, res){
         })
     }
 })
+router.get("/all-history", async function(req, res){
+    try{
+        const history = await client.db("Cinema").collection("transactions").find(
+        ).toArray()
+        res.json(history)
+    }
+    catch(err){
+        res.status(401).json({
+            "message":"Error, Please try again."
+        })
+    }
+})
 export default router

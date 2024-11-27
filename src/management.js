@@ -189,4 +189,57 @@ router.get("/all-users",async function(req,res){
         })
     }
 })
+router.post("/get-history", async function(req, res){
+    try{
+        const history = await client.db("Cinema").collection("transactions").findOne(
+            {orderNum:req.body.orderNum}
+        )
+        res.json(history)
+    }
+    catch(err){
+        res.status(401).json({
+            "message":"Error, Please try again."
+        })
+    }
+})
+router.post("/refund", async function(req, res){
+    const data = await getUnavailable(req.body.name)
+    const selected = JSON.parse(req.body.seatIndex)
+    for(let i in selected){
+        if(data.includes(selected[i])) data.splice(data.indexOf(selected[i]),1)
+    }
+    try{
+        await client.db("Cinema").collection("seats").updateOne(
+            {
+                name: req.body.name
+            },
+            {
+                "$set":{unavailable:data}
+            }
+        )
+        try{
+            await client.db("Cinema").collection("transactions").updateOne(
+                {
+                    orderNum: req.body.orderNum
+                },
+                {
+                    "$set":{status: "refunded"}
+                }
+            )
+            res.json({
+                "status":"success"
+            })
+        }
+        catch(err){
+            res.status(401).json({
+                "message":"Error, Please try again."
+            })
+        }
+    }
+    catch(err){
+        res.status(401).json({
+            "message":"Error, Please try again."
+        })
+    }
+})
 export default router

@@ -1,4 +1,4 @@
-var loginInfo = null
+
 jQuery(function(){
     $.ajax({
         url:"/auth/me",
@@ -9,6 +9,5 @@ jQuery(function(){
         if(result.user.role == "admin"){
             $("#management-nagivation").removeClass("d-none")
         }
-        loginInfo = null
     }).fail()
 })
