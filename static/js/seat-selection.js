@@ -170,31 +170,33 @@ jQuery(function() {
             calculatePrice(res.price);
         });
         $("#Confirm").on("click", function(){
-            let ticketNo = getTicketNo();
-            if(ticketNo == 0){
-                alert("You should select at least one ticket.")
-                return
+            const confirmSeat =  confirm('Confirm with the time and seats?');
+            if (confirmSeat) {
+                let ticketNo = getTicketNo();
+                if(ticketNo == 0){
+                    alert("You should select at least one ticket.")
+                    return
+                }
+                $.ajax({
+                    url:"/auth/me",
+                    method:"GET",
+                    dataType:"json"
+                }).done(function(){
+                    let price = calculatePrice(res.price);
+                    timeslot = document.querySelector('input[name="slot"]:checked').id;
+                    selectedArray = JSON.stringify(selectedArray);
+                    window.location.href = `payment.html?id=${id}&timeslot=${timeslot}&ticketNo=${ticketNo}&price=${price}&seats=${selectedArray}`//, "_blank");
+                })
+                .fail(function(err){
+                    if(err.responseJSON.status == "fail"){
+                        alert("You should login first.")
+                        window.location.href = "/login.html"
+                    }
+                    else{
+                        alert("Error, please try again.")
+                    }
+                })
             }
-            $.ajax({
-                url:"/auth/me",
-                method:"GET",
-                dataType:"json"
-            }).done(function(){
-                let price = calculatePrice(res.price);
-                timeslot = document.querySelector('input[name="slot"]:checked').id;
-                selectedArray = JSON.stringify(selectedArray);
-                window.location.href = `payment.html?id=${id}&timeslot=${timeslot}&ticketNo=${ticketNo}&price=${price}&seats=${selectedArray}`//, "_blank");
-            })
-            .fail(function(err){
-                if(err.responseJSON.status == "fail"){
-                    alert("You should login first.")
-                    window.location.href = "/login.html"
-                }
-                else{
-                    alert("Error, please try again.")
-                }
-            })
-            
         })
     }).fail(function(err){
         alert(err.responseJSON.message)
