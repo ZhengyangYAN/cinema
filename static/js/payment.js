@@ -17,7 +17,7 @@ jQuery(function() {
             return "A"+(index%8+1)
         }
         else if (index >= 16 && index <= 22){
-            return "A"+(index%16+1)
+            return "B"+(index%16+1)
         }
         else if (index >= 25 && index <= 31){
             return "C"+(index%25+1)
