@@ -1,3 +1,4 @@
+//YAN Zhengyang 21104095d, ZHOU Yutong 22098552d
 jQuery(function() {
     var selectedArray = []
     var selectedHall = 'hall1'
